@@ -1,0 +1,2570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AFZAAL TOOLKIT - PRO DEVELOPER SUITE</title>
+    <!-- FontAwesome Icons CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts Collection -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Montserrat:wght@400;600;700&family=Orbitron:wght@500;700&family=Pacifico&family=Poppins:wght@400;600;700&family=Roboto:wght@400;500;700&family=Source+Code+Pro:wght@500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ==========================================
+           ROOT VARIABLES & THEME CONFIGURATION
+           ========================================== */
+        :root {
+            --bg-color: #05070c;
+            --text-color: #ffffff;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --card-border: rgba(255, 255, 255, 0.08);
+            --subtext-color: #888;
+            --search-bg: rgba(255, 255, 255, 0.05);
+            --accent-orange: #ff7b00;
+            --active-font-family: 'Poppins', sans-serif;
+        }
+
+        /* THEME 1: DAY / LIGHT MODE */
+        .theme-day {
+            --bg-color: #f4f6f9 !important;
+            --text-color: #111111 !important;
+            --card-bg: rgba(0, 0, 0, 0.04) !important;
+            --card-border: rgba(0, 0, 0, 0.12) !important;
+            --subtext-color: #555555 !important;
+            --search-bg: rgba(0, 0, 0, 0.06) !important;
+            --accent-orange: #d35400 !important;
+        }
+
+        /* THEME 2: GOLDEN THEME */
+        .theme-golden {
+            --bg-color: #1a1400 !important;
+            --text-color: #ffd700 !important;
+            --card-bg: rgba(255, 215, 0, 0.06) !important;
+            --card-border: rgba(255, 215, 0, 0.2) !important;
+            --subtext-color: #e5c158 !important;
+            --search-bg: rgba(255, 215, 0, 0.08) !important;
+            --accent-orange: #ffa500 !important;
+        }
+
+        /* THEME 3: GOLDEN + BLACK THEME */
+        .theme-golden-black {
+            --bg-color: #000000 !important;
+            --text-color: #ffcc00 !important;
+            --card-bg: rgba(255, 204, 0, 0.04) !important;
+            --card-border: rgba(255, 204, 0, 0.3) !important;
+            --subtext-color: #b39b28 !important;
+            --search-bg: rgba(255, 204, 0, 0.06) !important;
+            --accent-orange: #ffaa00 !important;
+        }
+
+        /* THEME 4: WHITE + BLACK THEME */
+        .theme-white-black {
+            --bg-color: #000000 !important;
+            --text-color: #ffffff !important;
+            --card-bg: rgba(255, 255, 255, 0.06) !important;
+            --card-border: rgba(255, 255, 255, 0.2) !important;
+            --subtext-color: #aaaaaa !important;
+            --search-bg: rgba(255, 255, 255, 0.08) !important;
+            --accent-orange: #ff7b00 !important;
+        }
+
+        /* ==========================================
+           GLOBAL RESET & SOLID DARK BACKGROUND
+           ========================================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: var(--active-font-family);
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        body {
+            background-color: var(--bg-color) !important;
+            color: var(--text-color);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        /* LIVE STATS BADGE BAR */
+        .live-stats-bar {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin: 15px 0 5px 0;
+        }
+
+        .stat-pill {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--card-border);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            backdrop-filter: blur(5px);
+        }
+
+        .stat-pill i {
+            color: var(--accent-orange);
+        }
+
+        /* INTRO SPLASH SCREEN */
+        #intro-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #05070c;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            padding: 30px 20px;
+            text-align: center;
+            transition: opacity 0.8s ease, visibility 0.8s;
+            overflow-y: auto;
+        }
+
+        .logo-ring-container {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-shrink: 0;
+        }
+
+        .spinner-ring {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 3px solid transparent;
+            border-top-color: #ff7b00;
+            border-bottom-color: #ffffff;
+            animation: spin 2s linear infinite;
+        }
+
+        .spinner-ring-outer {
+            position: absolute;
+            width: 120%;
+            height: 120%;
+            border-radius: 50%;
+            border: 2px dashed rgba(255, 123, 0, 0.5);
+            animation: spin-reverse 3s linear infinite;
+        }
+
+        .logo-img {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            object-fit: cover;
+            z-index: 2;
+        }
+
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes spin-reverse { 0% { transform: rotate(360deg); } 100% { transform: rotate(0deg); } }
+
+        .intro-title { margin-top: 20px; font-size: 22px; font-weight: bold; letter-spacing: 2px; flex-shrink: 0; color: #fff; }
+        .intro-sub { color: #ff7b00; font-size: 12px; letter-spacing: 1.5px; margin-top: 5px; flex-shrink: 0; }
+
+        /* FUTURISTIC MOBILE UPDATES TOGGLE */
+        .futuristic-toggle-container {
+            margin-top: 15px;
+            width: 100%;
+            max-width: 360px;
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid #ff7b00;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 0 15px rgba(255, 123, 0, 0.3), inset 0 0 10px rgba(255, 123, 0, 0.1);
+            text-align: left;
+            backdrop-filter: blur(10px);
+        }
+
+        .futuristic-toggle-header {
+            background: linear-gradient(90deg, #ff7b00, #ff0055);
+            color: #ffffff;
+            padding: 10px 14px;
+            font-weight: 800;
+            font-size: 11px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            letter-spacing: 1px;
+            text-shadow: 0 0 5px rgba(0,0,0,0.5);
+        }
+
+        .futuristic-toggle-body {
+            padding: 12px;
+            font-size: 11px;
+            color: #00ffff;
+            background: rgba(0, 0, 0, 0.6);
+            display: block;
+            border-top: 1px solid rgba(255, 123, 0, 0.3);
+            line-height: 1.5;
+        }
+
+        .cyan-glow-message {
+            margin-top: 15px;
+            font-weight: 800;
+            font-size: 13px;
+            max-width: 380px;
+            letter-spacing: 1px;
+            color: #00ffff;
+            text-shadow: 0 0 5px #00ffff, 0 0 10px #00ffff, 0 0 20px #00ffff, 0 0 40px #0088ff;
+            animation: cyanPulse 1.8s ease-in-out infinite alternate;
+        }
+
+        @keyframes cyanPulse {
+            0% { text-shadow: 0 0 5px #00ffff, 0 0 10px #00ffff, 0 0 20px #00ffff; transform: scale(0.98); }
+            100% { text-shadow: 0 0 10px #00ffff, 0 0 25px #00ffff, 0 0 40px #00a2ff, 0 0 60px #00d2ff; transform: scale(1.02); }
+        }
+
+        .intro-channels-box {
+            margin-top: 15px;
+            width: 100%;
+            max-width: 360px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 10;
+            max-height: 220px;
+            overflow-y: auto;
+            padding-right: 4px;
+        }
+
+        .intro-channel-btn {
+            padding: 10px 14px;
+            border-radius: 10px;
+            text-decoration: none;
+            color: #fff;
+            font-weight: bold;
+            font-size: 11px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .btn-tg-1 { background: linear-gradient(90deg, #229ED9, #0088cc); }
+        .btn-tg-2 { background: linear-gradient(90deg, #8a2be2, #4a40ff); }
+        .btn-tt-1 { background: linear-gradient(90deg, #000000, #25f4ee); color: #fff; }
+        .btn-yt-1 { background: linear-gradient(90deg, #ff0000, #cc0000); }
+        .btn-ig-1 { background: linear-gradient(90deg, #833ab4, #fd1d1d, #fcb045); }
+        .btn-gh-1 { background: linear-gradient(90deg, #24292e, #181717); }
+        .btn-gh-2 { background: linear-gradient(90deg, #2b3137, #24292e); }
+        .btn-wa-3 { background: linear-gradient(90deg, #25D366, #128C7E); }
+
+        .btn-close-intro {
+            margin-top: 15px;
+            padding: 10px 20px;
+            background: linear-gradient(90deg, #ff7b00, #ff4500);
+            border: none;
+            border-radius: 20px;
+            color: #fff;
+            font-weight: bold;
+            font-size: 12px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(255, 123, 0, 0.4);
+        }
+
+        /* MAIN CONTAINER & HEADER */
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 480px;
+            margin: 0 auto;
+            padding: 20px 15px 90px 15px;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0 20px 0;
+            position: relative;
+        }
+
+        .header-brand { display: flex; align-items: center; gap: 10px; }
+        .header-logo { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; }
+        .header-title { font-size: 16px; font-weight: bold; }
+        .header-icons { display: flex; gap: 12px; font-size: 16px; cursor: pointer; color: var(--subtext-color); align-items: center; }
+
+        .saved-btn-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 13px;
+            font-weight: bold;
+            background: rgba(255,255,255,0.06);
+            padding: 5px 10px;
+            border-radius: 20px;
+            border: 1px solid var(--card-border);
+            color: #ffd700;
+        }
+
+        .saved-dot-badge {
+            position: absolute;
+            top: -3px; right: -3px;
+            width: 10px; height: 10px;
+            border-radius: 50%;
+            background-color: #27c93f;
+            border: 2px solid var(--bg-color);
+        }
+
+        .saved-dot-badge.unread {
+            background-color: #ff003c;
+            box-shadow: 0 0 8px #ff003c;
+            animation: badgeGlow 1.2s infinite alternate;
+        }
+
+        @keyframes badgeGlow { 0% { transform: scale(0.9); box-shadow: 0 0 4px #ff003c; } 100% { transform: scale(1.2); box-shadow: 0 0 10px #ff003c; } }
+
+        /* 3-DOTS MODAL & FONT SELECTOR */
+        .dots-modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
+            z-index: 20000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .dots-modal-content {
+            background: #0b0f19;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 16px;
+            width: 100%;
+            max-width: 380px;
+            max-height: 85vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.8);
+            padding: 20px;
+        }
+
+        .dots-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 12px;
+            margin-bottom: 15px;
+            font-weight: bold;
+            font-size: 15px;
+            color: #fff;
+        }
+
+        .dots-modal-close { cursor: pointer; color: #ff4757; font-size: 18px; }
+
+        .dots-menu-item {
+            padding: 12px 14px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-color);
+            text-decoration: none;
+            cursor: pointer;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 10px;
+            margin-bottom: 8px;
+        }
+
+        .dots-menu-item:hover { background: rgba(255,255,255,0.08); color: var(--accent-orange); border-color: var(--accent-orange); }
+
+        .font-selector-wrapper {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 10px;
+            padding: 12px;
+            margin-bottom: 12px;
+        }
+
+        .font-selector-label {
+            font-size: 12px;
+            font-weight: bold;
+            color: #ff7b00;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .font-select-dropdown {
+            width: 100%;
+            padding: 10px;
+            background: #161b2b;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #fff;
+            border-radius: 8px;
+            outline: none;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        /* HERO & SEARCH */
+        .hero-section { text-align: center; margin: 15px 0; }
+        .hero-logo-box { margin: 0 auto; width: 110px; height: 110px; }
+        
+        /* HUMAN HANDWRITING TYPEWRITER TITLE FIX */
+        .main-title { 
+            font-family: 'Caveat', cursive !important; /* PROTECTED HUMAN HANDWRITING FONT */
+            font-size: 32px !important; 
+            font-weight: 700; 
+            margin-top: 10px; 
+            letter-spacing: 1.5px; 
+            min-height: 40px; 
+            color: var(--text-color);
+            text-shadow: 0 0 10px rgba(255, 123, 0, 0.5);
+        }
+        
+        .main-subtitle { color: var(--accent-orange); font-size: 11px; letter-spacing: 1.5px; margin-top: 3px; font-weight: 600; }
+
+        .search-box {
+            background: var(--search-bg); border: 1px solid var(--card-border); border-radius: 12px;
+            padding: 10px 14px; display: flex; align-items: center; gap: 10px; margin: 15px 0; color: var(--subtext-color);
+        }
+
+        .search-box input { background: transparent; border: none; outline: none; color: var(--text-color); width: 100%; }
+
+        /* TOOLS GRID */
+        .tools-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 30px; }
+
+        .tool-card {
+            background: var(--card-bg); border: 2px solid transparent; border-radius: 14px; overflow: hidden; position: relative;
+            backdrop-filter: blur(10px); display: flex; flex-direction: column; box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease; height: 100%;
+        }
+
+        .tool-card:hover { transform: translateY(-3px); box-shadow: 0 8px 18px rgba(0,0,0,0.5); }
+
+        .tool-card:nth-child(1n) { border-color: #ffd700; background: linear-gradient(145deg, rgba(255,215,0,0.08), rgba(255,255,255,0.02)); }
+        .tool-card:nth-child(2n) { border-color: #00f3ff; background: linear-gradient(145deg, rgba(0,243,255,0.08), rgba(255,255,255,0.02)); }
+        .tool-card:nth-child(3n) { border-color: #ff007f; background: linear-gradient(145deg, rgba(255,0,127,0.08), rgba(255,255,255,0.02)); }
+        .tool-card:nth-child(4n) { border-color: #00ff66; background: linear-gradient(145deg, rgba(0,255,102,0.08), rgba(255,255,255,0.02)); }
+        .tool-card:nth-child(5n) { border-color: #9d00ff; background: linear-gradient(145deg, rgba(157,0,255,0.08), rgba(255,255,255,0.02)); }
+        .tool-card:nth-child(6n) { border-color: #ff6600; background: linear-gradient(145deg, rgba(255,102,0,0.08), rgba(255,255,255,0.02)); }
+
+        .tool-banner {
+            position: relative; height: 85px; background: rgba(0,0,0,0.2); display: flex;
+            justify-content: center; align-items: center; overflow: hidden;
+        }
+
+        .tool-banner-bg {
+            position: absolute; width: 60px; height: 60px;
+            background: radial-gradient(circle, rgba(255,123,0,0.3) 0%, rgba(255,255,255,0.1) 100%);
+            filter: blur(15px); border-radius: 50%;
+        }
+
+        .tool-banner img { width: 50px; height: 50px; border-radius: 50%; z-index: 1; object-fit: cover; }
+
+        .star-icon {
+            position: absolute; top: 6px; right: 8px; font-size: 14px; color: var(--subtext-color);
+            z-index: 10; cursor: pointer; transition: transform 0.2s, color 0.2s;
+        }
+
+        .star-icon:hover { transform: scale(1.2); }
+        .star-icon.favorited { color: #ffd700; }
+
+        .tool-content { padding: 10px; display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between; }
+        .tool-title { font-size: 12px; font-weight: bold; margin-bottom: 3px; line-height: 1.2; }
+
+        .badge-new {
+            position: relative; overflow: hidden; color: #fff; font-size: 8px; font-weight: bold;
+            padding: 2px 6px; border-radius: 6px; display: inline-block; margin-bottom: 4px;
+        }
+
+        .badge-vip { background: #00e6a8; color: #000; }
+        .badge-yt { background: #ff4757; }
+        .badge-tt { background: #4a40ff; }
+        .badge-apk { background: #ff7b00; }
+        .badge-stickman { background: #e056fd; }
+        .badge-bot { background: #25D366; color: #000; }
+        .badge-course { background: #ff9f43; color: #000; }
+
+        .badge-new::after {
+            content: ''; position: absolute; top: -50%; left: -150%; width: 50%; height: 200%;
+            background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.6) 50%, rgba(255, 255, 255, 0) 100%);
+            transform: rotate(30deg); animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer { 0% { left: -150%; } 100% { left: 150%; } }
+
+        .tool-desc {
+            color: var(--subtext-color); font-size: 9.5px; margin-bottom: 6px; line-height: 1.25;
+            display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden;
+        }
+
+        .link-status { font-size: 8.5px; margin-bottom: 6px; font-weight: 600; }
+
+        .btn-launch {
+            width: 100%; border: none; color: white; padding: 7px; border-radius: 14px; font-weight: bold;
+            display: flex; justify-content: center; align-items: center; gap: 5px; cursor: pointer; font-size: 11px;
+            text-decoration: none; transition: all 0.3s ease;
+        }
+
+        .btn-git { background: linear-gradient(90deg, #ff416c, #ff4b2b); }
+        .btn-yt { background: linear-gradient(90deg, #ff0000, #ff4757); }
+        .btn-tt { background: linear-gradient(90deg, #4a40ff, #00d2ff); }
+        .btn-vali { background: linear-gradient(90deg, #f7b733, #fc4a1a); }
+        .btn-stickman { background: linear-gradient(90deg, #e056fd, #686de0); }
+        .btn-apk { background: linear-gradient(90deg, #00e6a8, #27c93f); color: #000; }
+
+        .rgb-text {
+            font-weight: bold; font-style: italic;
+            background: linear-gradient(90deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bf7, #7a00ff, #ff00c8, #ff0000);
+            background-size: 300% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: rgbFlow 2.5s linear infinite;
+        }
+
+        @keyframes rgbFlow { 0% { background-position: 0% center; } 100% { background-position: 300% center; } }
+
+        /* CONNECT SECTION */
+        .connect-section { margin-top: 15px; }
+        .section-title { text-align: center; font-size: 18px; font-weight: bold; margin-bottom: 12px; }
+        .connect-grid { display: flex; flex-direction: column; gap: 10px; }
+        .connect-card {
+            background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 12px; padding: 10px 14px;
+            display: flex; align-items: center; justify-content: space-between; text-decoration: none; color: var(--text-color);
+        }
+        .connect-left { display: flex; align-items: center; gap: 12px; }
+        .connect-icon {
+            width: 36px; height: 36px; border-radius: 10px; display: flex; justify-content: center;
+            align-items: center; font-size: 16px; color: white;
+        }
+        .icon-tg { background: #229ED9; }
+        .icon-wa { background: #25D366; }
+        .icon-tt { background: #000000; color: #25f4ee; }
+        .icon-yt { background: #ff0000; }
+        .icon-ig { background: radial-gradient(circle at 30% 107%, #fdf497 0%, #df4937 5%, #702459 45%, #515ec4 90%); }
+        .icon-gh { background: #24292e; }
+        .icon-help { background: #ff4757; }
+        .icon-support { background: #70a1ff; }
+        .connect-info h4 { font-size: 13px; margin-bottom: 1px; }
+        .connect-info p { font-size: 10px; color: var(--subtext-color); letter-spacing: 0.5px; }
+
+        .whatsapp-float {
+            position: fixed; bottom: 20px; right: 20px; background: #25D366; color: white; width: 50px; height: 50px;
+            border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 24px;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4); z-index: 999; text-decoration: none;
+        }
+
+        /* RIGHT CORNER FLOATING 3-LINES MENU BUTTON & DROPDOWN */
+        .corner-menu-container {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            z-index: 10000;
+        }
+
+        .corner-menu-btn {
+            background: linear-gradient(135deg, #ffd700, #ff8c00);
+            color: #000;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(255, 215, 0, 0.5);
+            border: 2px solid #fff;
+            transition: transform 0.3s ease;
+        }
+
+        .corner-menu-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .corner-menu-dropdown {
+            display: none;
+            position: absolute;
+            bottom: 60px;
+            right: 0;
+            width: 260px;
+            background: #0b0f19;
+            border: 2px solid #ffd700;
+            border-radius: 14px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.9);
+            padding: 12px;
+            backdrop-filter: blur(10px);
+            z-index: 10001;
+        }
+
+        .corner-menu-dropdown.active {
+            display: block;
+            animation: fadeInMenu 0.3s ease;
+        }
+
+        @keyframes fadeInMenu {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .corner-menu-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 12px;
+            color: #ffd700;
+            text-decoration: none;
+            font-size: 11.5px;
+            font-weight: bold;
+            border-bottom: 1px solid rgba(255, 215, 0, 0.15);
+            transition: background 0.2s;
+            border-radius: 8px;
+            margin-bottom: 4px;
+        }
+
+        .corner-menu-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        .corner-menu-item:hover {
+            background: rgba(255, 215, 0, 0.15);
+        }
+
+        /* MODALS & TERMINAL UI */
+        .fav-modal {
+            display: none; position: fixed; top: 70px; right: 15px; width: 300px; background: rgba(11, 15, 25, 0.95);
+            backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 14px;
+            z-index: 10001; box-shadow: 0 10px 30px rgba(0,0,0,0.6); padding: 15px; overflow: hidden;
+        }
+        .notif-header {
+            display: flex; justify-content: space-between; align-items: center; font-weight: bold; margin-bottom: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding-bottom: 8px; font-size: 14px;
+        }
+        .notif-item {
+            background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); padding: 10px;
+            border-radius: 8px; font-size: 12px; margin-bottom: 8px; color: rgba(255, 255, 255, 0.9);
+        }
+        .notif-item span { display: block; font-size: 10px; color: var(--subtext-color); margin-top: 4px; }
+
+        .modal {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #05070c;
+            z-index: 10000; overflow-y: auto; padding: 20px 15px;
+        }
+        .terminal-window {
+            background: #0b0f19; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px;
+            max-width: 440px; width: 100%; margin: 20px auto; overflow: hidden; box-shadow: 0 15px 35px rgba(0,0,0,0.8);
+        }
+        .terminal-topbar {
+            background: #121826; padding: 10px 15px; display: flex; align-items: center; justify-content: space-between;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .terminal-dots { display: flex; gap: 6px; }
+        .dot { width: 10px; height: 10px; border-radius: 50%; }
+        .dot-red { background: #ff5f56; }
+        .dot-yellow { background: #ffbd2e; }
+        .dot-green { background: #27c93f; }
+        .terminal-path { font-size: 11px; color: #666; font-family: monospace; }
+        .terminal-close { cursor: pointer; color: #ff4757; font-size: 16px; }
+        .terminal-body { padding: 20px; }
+        .terminal-logo-area { text-align: center; margin-bottom: 15px; }
+        .terminal-brand {
+            font-size: 18px; font-weight: bold; color: #fff; letter-spacing: 1px; display: flex; align-items: center;
+            justify-content: center; gap: 8px; margin-top: 5px; font-family: monospace;
+        }
+        .terminal-subtitle { font-size: 11px; color: #00e6a8; font-family: monospace; margin-top: 4px; }
+        .btn-terminal {
+            width: 100%; padding: 12px; background: linear-gradient(90deg, #25D366, #128C7E); border: none;
+            color: white; font-weight: bold; border-radius: 8px; cursor: pointer; font-size: 13px;
+        }
+        .terminal-footer { text-align: center; font-size: 10px; color: #555; margin-top: 15px; font-family: monospace; }
+        .terminal-footer span { color: #ff4757; }
+
+        /* ADVANCED TIKTOK DOWNLOADER STYLES */
+        .tt-preview-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 12px;
+            margin-top: 15px;
+            text-align: center;
+        }
+        .tt-thumb-img {
+            width: 100%;
+            max-height: 220px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .tt-video-title {
+            font-size: 11px;
+            color: #ddd;
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+        .tt-download-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .btn-dl-opt {
+            width: 100%;
+            padding: 10px;
+            border-radius: 8px;
+            border: none;
+            color: #fff;
+            font-weight: bold;
+            font-size: 11px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            text-decoration: none;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+        .btn-dl-nwm { background: linear-gradient(90deg, #00e6a8, #00b386); color: #000; }
+        .btn-dl-wm { background: linear-gradient(90deg, #4a40ff, #2575fc); }
+        .btn-dl-mp3 { background: linear-gradient(90deg, #ff7b00, #ff4500); }
+
+        /* GIT & YT INFO FETCHER COMBINED TOOL STYLES */
+        .hassanmods-header-box {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 12px;
+            padding: 12px;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        .hassanmods-title { font-size: 18px; font-weight: 900; letter-spacing: 1px; }
+        .hassanmods-title span.white-txt { color: #ffffff; }
+        .hassanmods-title span.red-txt { color: #ff4757; }
+        .hassanmods-dev-link { color: #25D366; font-size: 12px; font-weight: bold; margin-top: 4px; text-decoration: none; display: inline-block; }
+
+        .hassanmods-tabs {
+            display: flex; background: rgba(255, 255, 255, 0.05); border-radius: 10px; padding: 4px; gap: 6px; margin-bottom: 15px;
+        }
+        .hassanmods-tab-btn {
+            flex: 1; padding: 10px; border: none; background: transparent; color: #888; font-weight: bold;
+            font-size: 11px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center;
+            gap: 6px; transition: all 0.3s;
+        }
+        .hassanmods-tab-btn.active { background: rgba(255, 255, 255, 0.12); color: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.3); }
+
+        .hm-tab-section { display: none; }
+        .hm-tab-section.active { display: block; }
+
+        .hm-input-field {
+            width: 100%; padding: 12px; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px; color: #fff; margin-bottom: 10px; outline: none; font-size: 12px;
+        }
+
+        .gh-profile-card {
+            background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 15px; text-align: center; margin-bottom: 12px;
+        }
+        .gh-avatar-img { width: 110px; height: 110px; border-radius: 50%; object-fit: cover; border: 3px solid rgba(255,255,255,0.1); margin-bottom: 8px; }
+        .gh-grid-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px; }
+        .gh-stat-box { background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.06); padding: 8px; border-radius: 8px; text-align: center; }
+        .gh-stat-box h4 { font-size: 15px; color: #fff; }
+        .gh-stat-box p { font-size: 9px; color: #888; letter-spacing: 0.5px; }
+
+        .gh-repo-item-link {
+            background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 8px;
+            padding: 10px 12px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center;
+            text-decoration: none; color: #58a6ff; font-size: 12px; font-weight: 600; transition: background 0.2s;
+        }
+        .gh-repo-item-link:hover { background: rgba(255, 255, 255, 0.08); }
+
+        .yt-video-card {
+            background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 12px; margin-top: 12px;
+        }
+        .yt-thumb-box { position: relative; width: 100%; border-radius: 8px; overflow: hidden; margin-bottom: 8px; }
+        .yt-thumb-box img { width: 100%; display: block; border-radius: 8px; }
+
+        .inline-player-wrapper {
+            position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 10px; margin-bottom: 12px; background: #000;
+        }
+        .inline-player-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+
+        .faq-accordion { display: flex; flex-direction: column; gap: 10px; margin-top: 15px; }
+        .faq-item { background: rgba(255,255,255,0.05); border: 1px solid var(--card-border); border-radius: 8px; overflow: hidden; }
+        .faq-question { padding: 12px; font-size: 12px; font-weight: bold; cursor: pointer; display: flex; justify-content: space-between; align-items: center; color: var(--accent-orange); }
+        .faq-answer { padding: 0 12px 12px 12px; font-size: 11px; color: var(--subtext-color); display: none; line-height: 1.5; }
+
+        #custom-toast {
+            position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px);
+            background: rgba(15, 19, 31, 0.95); border: 1px solid #00e6a8; color: #fff; padding: 12px 22px;
+            border-radius: 30px; font-size: 13px; font-family: monospace; display: flex; align-items: center; gap: 10px;
+            z-index: 30000; opacity: 0; transition: transform 0.4s ease, opacity 0.4s ease; pointer-events: none;
+        }
+        #custom-toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+        #custom-toast i { color: #00e6a8; font-size: 16px; }
+    </style>
+</head>
+<body>
+
+    <!-- Intro Splash Screen -->
+    <div id="intro-screen">
+        <div class="logo-ring-container">
+            <div class="spinner-ring"></div>
+            <div class="spinner-ring-outer"></div>
+            <img src="https://i.ibb.co/SDg606JB/IMG-20261108-WA0025.jpg" class="logo-img" alt="Logo">
+        </div>
+        <div class="intro-title">AFZAAL TOOLKIT</div>
+        <div class="intro-sub">PRO TOOLS FOR DEVELOPERS</div>
+
+        <!-- FUTURISTIC MOBILE UPDATES TOGGLE -->
+        <div class="futuristic-toggle-container">
+            <div class="futuristic-toggle-header" onclick="toggleFuturisticUpdates()">
+                <span><i class="fa-solid fa-bolt-lightning"></i> LATEST UPDATE ADDED</span>
+                <i id="futuristic-toggle-icon" class="fa-solid fa-chevron-down"></i>
+            </div>
+            <div id="futuristic-toggle-content" class="futuristic-toggle-body">
+                🚀 <strong>NEW UPDATES:</strong><br>
+                ✨ <em>Code Extractor & All Social Media Appeal Generator Added!</em>
+            </div>
+        </div>
+
+        <div class="cyan-glow-message">PLEASE FOLLOW OUR SOCIALS TO ACCESS TOOLKIT:</div>
+        <div class="intro-channels-box">
+            <a href="https://t.me/Hassan_1M_FF" target="_blank" class="intro-channel-btn btn-tg-1">
+                <span><i class="fa-brands fa-telegram"></i> AFZAAL OFC</span>
+                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+            </a>
+            <a href="https://t.me/hassanff01" target="_blank" class="intro-channel-btn btn-tg-2">
+                <span><i class="fa-brands fa-telegram"></i> AFZAAL OFC 2</span>
+                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+            </a>
+            <a href="https://tiktok.com/@maryo3211" target="_blank" class="intro-channel-btn btn-tt-1">
+                <span><i class="fa-brands fa-tiktok"></i> AFZAAL TT OFC</span>
+                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+            </a>
+            <a href="https://YouTube.com/@hassan-ff-1x" target="_blank" class="intro-channel-btn btn-yt-1">
+                <span><i class="fa-brands fa-youtube"></i> AFZAAL YT OFC</span>
+                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+            </a>
+            <a href="https://instagram.com/@end_hassan_ff" target="_blank" class="intro-channel-btn btn-ig-1">
+                <span><i class="fa-brands fa-instagram"></i> AFZAAL IG OFC</span>
+                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+            </a>
+            <a href="https://GitHub.com/hassan-ff-max" target="_blank" class="intro-channel-btn btn-gh-1">
+                <span><i class="fa-brands fa-github"></i> AFZAAL GUT HUB OFC</span>
+                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+            </a>
+            <a href="https://GitHub.com/hassan-ff-max-11" target="_blank" class="intro-channel-btn btn-gh-2">
+                <span><i class="fa-brands fa-github"></i> AFZAAL GITHUB 2 OFC</span>
+                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+            </a>
+            <a href="https://t.me/hassan1updates" target="_blank" class="intro-channel-btn btn-tg-1">
+                <span><i class="fa-brands fa-telegram"></i> Telegram Channel</span>
+                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+            </a>
+            <a href="https://whatsapp.com/channel/0029VbDRJh789ine9bjCVF3m" target="_blank" class="intro-channel-btn btn-wa-3">
+                <span><i class="fa-brands fa-whatsapp"></i> WhatsApp Channel</span>
+                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+            </a>
+            <!-- NEW WHATSAPP CHANNELS IN POP-UP -->
+            <a href="https://whatsapp.com/channel/0029VbDuHz8JJhzb8zf92C1H" target="_blank" class="intro-channel-btn btn-wa-3">
+                <span><i class="fa-brands fa-whatsapp"></i> MY DEVELOPMENTS UPDATES</span>
+                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+            </a>
+            <a href="https://whatsapp.com/channel/0029VbE1NH99Bb65S8oOnS47" target="_blank" class="intro-channel-btn btn-wa-3">
+                <span><i class="fa-brands fa-whatsapp"></i> ALL SOURCE CODES</span>
+                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+            </a>
+        </div>
+        <button class="btn-close-intro" onclick="closeIntroScreen()">CONTINUE TO TOOLKIT <i class="fa-solid fa-arrow-right"></i></button>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <header>
+            <div class="header-brand">
+                <img src="https://i.ibb.co/SDg606JB/IMG-20261108-WA0025.jpg" class="header-logo" alt="Logo">
+                <div class="header-title">AFZAAL TOOLKIT</div>
+            </div>
+            <div class="header-icons">
+                <div class="saved-btn-wrapper" onclick="toggleFavorites()" title="Favorites">
+                    <i class="fa-solid fa-star"></i>
+                    <span>Saved</span>
+                    <div id="saved-badge" class="saved-dot-badge"></div>
+                </div>
+                <!-- MULTI-STATE THEME TOGGLE (MOON / SUN) -->
+                <i id="theme-toggle" class="fa-solid fa-moon" onclick="toggleMultiTheme()" title="Toggle Theme Modes"></i>
+                <i class="fa-solid fa-ellipsis-vertical" onclick="toggle3DotsModal()" title="More Options" style="padding-left: 5px;"></i>
+            </div>
+        </header>
+
+        <!-- Favorites Dropdown -->
+        <div id="fav-dropdown" class="fav-modal">
+            <div class="notif-header">
+                <span>My Favorite Tools</span>
+                <i class="fa-solid fa-xmark" style="cursor:pointer;" onclick="toggleFavorites()"></i>
+            </div>
+            <div id="fav-list"></div>
+        </div>
+
+        <!-- Hero Section -->
+        <div class="hero-section">
+            <div class="logo-ring-container hero-logo-box">
+                <div class="spinner-ring"></div>
+                <div class="spinner-ring-outer"></div>
+                <img src="https://i.ibb.co/SDg606JB/IMG-20261108-WA0025.jpg" class="logo-img" alt="Logo">
+            </div>
+            <!-- Main Title with Human Handwriting Style Animation -->
+            <div class="main-title" id="typewriter-title">AFZAAL FF</div>
+            <div class="main-subtitle">PRO TOOLS FOR DEVELOPERS</div>
+            
+            <div class="live-stats-bar">
+                <div class="stat-pill"><i class="fa-solid fa-toolbox"></i> Total Tools: <span id="total-tools-count">0</span></div>
+            </div>
+        </div>
+
+        <!-- Live Search Box -->
+        <div class="search-box">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" id="tool-search-input" placeholder="Search tools...">
+        </div>
+
+        <!-- All Tools Grid Container -->
+        <div class="tools-grid">
+
+            <!-- 1ST NEW ITEM: CODE EXTRACTOR -->
+            <div class="tool-card" data-id="code-extractor">
+                <div class="tool-banner">
+                    <div class="tool-banner-bg"></div>
+                    <i class="fa-regular fa-star star-icon" onclick="toggleFavorite(this, 'CODE EXTRACTOR', 'https://hassan-host-top.vercel.app/?site=hassan-code-extractor-v1', true)"></i>
+                    <img src="https://i.ibb.co/SDg606JB/IMG-20261108-WA0025.jpg" alt="Logo">
+                </div>
+                <div class="tool-content">
+                    <div>
+                        <div class="tool-title">CODE EXTRACTOR</div>
+                        <span class="badge-new badge-vip">EXTRACTOR</span>
+                        <div class="tool-desc">Extract source codes from website links easily.</div>
+                        <div class="link-status" data-url="https://hassan-host-top.vercel.app/?site=hassan-code-extractor-v1"><span style="color:var(--subtext-color);">Checking link...</span></div>
+                    </div>
+                    <a href="https://hassan-host-top.vercel.app/?site=hassan-code-extractor-v1" target="_blank" class="btn-launch btn-git"><i class="fa-solid fa-code"></i> Open Extractor</a>
+                </div>
+            </div>
+
+            <!-- 2ND NEW ITEM: ALL SOCIAL MEDIA APPEAL GENERATOR -->
+            <div class="tool-card" data-id="all-social-appeal-generator">
+                <div class="tool-banner">
+                    <div class="tool-banner-bg"></div>
+                    <i class="fa-regular fa-star star-icon" onclick="toggleFavorite(this, 'ALL SOCIAL MEDIA APPEAL GENERATOR', 'https://hassan-allplatform-appeal-geberator.vercel.app', true)"></i>
+                    <img src="https://i.ibb.co/SDg606JB/IMG-20261108-WA0025.jpg" alt="Logo">
+                </div>
+                <div class="tool-content">
+                    <div>
+                        <div class="tool-title">ALL SOCIAL MEDIA APPEAL GENERATOR</div>
+                        <span class="badge-new badge-tt">APPEAL</span>
+                        <div class="tool-desc">Generate official appeals for social media platforms.</div>
+                        <div class="link-status" data-url="https://hassan-allplatform-appeal-geberator.vercel.app"><span style="color:var(--subtext-color);">Checking link...</span></div>
+                    </div>
+                    <a href="https://hassan-allplatform-appeal-geberator.vercel.app" target="_blank" class="btn-launch btn-tt"><i class="fa-solid fa-file-lines"></i> Open Generator</a>
+                </div>
+            </div>
+
+            <!-- 1ST NEW ITEM: AFZAAL ALL SOCIAL MEDIA'S DOWNLOADER -->
+            <div class="tool-card" data-id="hassan-all-social-downloader">
+                <div class="tool-banner">
+                    <div class="tool-banner-bg"></div>
+                    <i class="fa-regular fa-star star-icon" onclick="toggleFavorite(this, 'AFZAAL ALL SOCIAL MEDIA\\'S DOWNLOADER', 'https://hassan-downloader-v1.vercel.app', true)"></i>
+                    <img src="https://i.ibb.co/SDg606JB/IMG-20261108-WA0025.jpg" alt="Logo">
+                </div>
+                <div class="tool-content">
+                    <div>
+                        <div class="tool-title">AFZAAL ALL SOCIAL MEDIA'S DOWNLOADER</div>
+                        <span class="badge-new badge-tt">DOWNLOADER</span>
+                        <div class="tool-desc">Download videos and media from all social media platforms easily.</div>
+                        <div class="link-status" data-url="https://hassan-downloader-v1.vercel.app"><span style="color:var(--subtext-color);">Checking link...</span></div>
+                    </div>
+                    <a href="https://hassan-downloader-v1.vercel.app" target="_blank" class="btn-launch btn-tt"><i class="fa-solid fa-download"></i> Open Downloader</a>
+                </div>
+            </div>
+
+            <!-- 2ND NEW ITEM: AFZAAL LINK LOCKER -->
+            <div class="tool-card" data-id="hassan-link-locker">
+                <div class="tool-banner">
+                    <div class="tool-banner-bg"></div>
+                    <i class="fa-regular fa-star star-icon" onclick="toggleFavorite(this, 'AFZAAL LINK LOCKER', 'https://hassan-locker.vercel.app', true)"></i>
+                    <img src="https://i.ibb.co/SDg606JB/IMG-20261108-WA0025.jpg" alt="Logo">
+                </div>
+                <div class="tool-content">
+                    <div>
+                        <div class="tool-title">AFZAAL LINK LOCKER</div>
+                        <span class="badge-new badge-vip">LOCKER</span>
+                        <div class="tool-desc">Secure and lock your important links with professional tools.</div>
+                        <div class="link-status" data-url="https://hassan-locker.vercel.app"><span style="color:var(--subtext-color);">Checking link...</span></div>
+                    </div>
+                    <a href="https://hassan-locker.vercel.app" target="_blank" class="btn-launch btn-git"><i class="fa-solid fa-lock"></i> Open Locker</a>
+                </div>
+            </div>
+
+            <!-- 1ST CARD: AFZAAL HOSTING 2 -->
+            <div class="tool-card" data-id="hassan-hosting-2-tool">
+                <div class="tool-banner">
+                    <div class="tool-banner-bg"></div>
+                    <i class="fa-regular fa-star star-icon" onclick="toggleFavorite(this, 'AFZAAL HOSTING 2', 'https://hassan-host-free.vercel.app', true)"></i>
+                    <img src="https://i.ibb.co/SDg606JB/IMG-20261108-WA0025.jpg" alt="Logo">
+                </div>
+                <div class="tool-content">
+                    <div>
+                        <div class="tool-title">AFZAAL HOSTING 2</div>
+                        <span class="badge-new badge-vip">HOSTING</span>
+                        <div class="tool-desc">this is my second hosting website</div>
+                        <div class="link-status" data-url="https://hassan-host-free.vercel.app"><span style="color:var(--subtext-color);">Checking link...</span></div>
+                    </div>
+                    <a href="https://hassan-host-free.vercel.app" target="_blank" class="btn-launch btn-git"><i class="fa-solid fa-server"></i> Open Site</a>
+                </div>
+            </div>
+
+            <!-- 2ND CARD: LIVE TV -->
+            <div class="tool-card" data-id="live-tv-tool">
+                <div class="tool-banner">
+                    <div class="tool-banner-bg"></div>
+                    <i class="fa-regular fa-star star-icon" onclick="toggleFavorite(this, 'LIVE TV', 'https://hassan-host-top.vercel.app/?site=hassan-live-tv-channels', true)"></i>
+                    <img src="https://i.ibb.co/SDg606JB/IMG-20261108-WA0025.jpg" alt="Logo">
+                </div>
+                <div class="tool-content">
+                    <div>
+                        <div class="tool-title">LIVE TV</div>
+                        <span class="badge-new badge-yt">STREAMING</span>
+                        <div class="tool-desc">Click on Live button to open live tv website</div>
+                        <div class="link-status" data-url="https://hassan-host-top.vercel.app/?site=hassan-live-tv-channels"><span style="color:var(--subtext-color);">Checking link...</span></div>
+                    </div>
+                    <a href="https://hassan-host-top.vercel.app/?site=hassan-live-tv-channels" target="_blank" class="btn-launch btn-yt"><i class="fa-solid fa-tv"></i> Live</a>
+                </div>
+            </div>
+
+            <!-- 3RD CARD: OLD LIVE TV -->
+            <div class="tool-card" data-id="old-live-tv-tool">
+                <div class="tool-banner">
+                    <div class="tool-banner-bg"></div>
+                    <i class="fa-regular fa-star star-icon" onclick="toggleFavorite(this, 'OLD LIVE TV', 'https://hassan-host-top.vercel.app/?site=hassan-live-tv-channels', true)"></i>
+                    <img src="https://i.ibb.co/SDg606JB/IMG-20261108-WA0025.jpg" alt="Logo">
+                </div>
+                <div class="tool-content">
+                    <div>
+                        <div class="tool-title">OLD LIVE TV</div>
+                        <span class="badge-new badge-tt">ARCHIVE</span>
+                        <div class="tool-desc">this is my 1st tv channel website link If want so visit here</div>
+                        <div class="link-status" data-url="https://hassan-host-top.vercel.app/?site=hassan-live-tv-channels"><span style="color:var(--subtext-color);">Checking link...</span></div>
+                    </div>
+                    <a href="https://hassan-host-top.vercel.app/?site=hassan-live-tv-channels" target="_blank" class="btn-launch btn-tt"><i class="fa-solid fa-tv"></i> Open Site</a>
+                </div>
+            </div>
+
+            <!-- 4TH CARD: AFZAAL HOSTING -->
+            <div class="tool-card" data-id="afzaal-hosting-tool">
+                <div class="tool-banner">
+                    <div class="tool-banner-bg"></div>
+                    <i class="fa-regular fa-star star-icon" onclick="toggleFavorite(this, 'AFZAAL HOSTING', 'https://afzaal-host-top.vercel.app', true)"></i>
+                    <img src="https://i.ibb.co/SDg606JB/IMG-20261108-WA0025.jpg" alt="Logo">
+                </div>
+                <div class="tool-content">
+                    <div>
+                        <div class="tool-title">AFZAAL HOSTING</div>
+                        <span class="badge-new badge-apk">FRIEND HOST</span>
+                        <div class="tool-desc">This is my friend's hosting website go and visit here</div>
+                        <div class="link-status" data-url="https://afzaal-host-top.vercel.app"><span style="color:var(--subtext-color);">Checking link...</span></div>
+                    </div>
+                    <a href="https://afzaal-host-top.vercel.app" target="_blank" class="btn-launch btn-apk"><i class="fa-solid fa-server"></i> Open Site</a>
+                </div>
+            </div>
+
+            <!-- FIRST TOOL (START): AFZAAL HOSTING -->
+            <div class="tool-card" data-id="hassan-hosting-tool">
+                <div class="tool-banner">
+                    <div class="tool-banner-bg"></div>
+                    <i class="fa-regular fa-star star-icon" onclick="toggleFavorite(this, 'AFZAAL HOSTING', 'https://hassan-host-top.vercel.app', true)"></i>
+                    <img src="https://i.ibb.co/SDg606JB/IMG-20261108-WA0025.jpg" alt="Logo">
+                </div>
+                <div class="tool-content">
+                    <div>
+                        <div class="tool-title">AFZAAL HOSTING</div>
+                        <span class="badge-new badge-vip">HOSTING</span>
+                        <div class="tool-desc">AFZAAL HOSTING SERVICES FOR DEVELOPERS 🌐</div>
+                        <div class="link-status" data-url="https://hassan-host-top.vercel.app"><span style="color:var(--subtext-color);">Checking link...</span></div>
+                    </div>
+                    <a href="https://hassan-host-top.vercel.app" target="_blank" class="btn-launch btn-git"><i class="fa-solid fa-server"></i> Open Site</a>
+                </div>
+            </div>
+
+            <!-- 1st Tool: TikTok DL -->
+            <div class="tool-card" data-id="tt-tool">
+                <div class="tool-banner">
+                    <div class="tool-banner-bg"></div>
+                    <i class="fa-regular fa-star star-icon" onclick="toggleFavorite(this, 'TikTok DL', 'tt-modal')"></i>
+                    <img src="https://i.ibb.co/SDg606JB/IMG-20261108-WA0025.jpg" alt="Logo">
+                </div>
+                <div class="tool-content">
+                    <div>
+                        <div class="tool-title">TikTok DL</div>
+                        <span class="badge-new badge-tt">NEW UPDATED</span>
+                        <div class="tool-desc">TikTok Downloader: Thumbnail Preview, No-WM, WM & MP3 Audio.</div>
+                    </div>
+                    <button class="btn-launch btn-tt" onclick="openModal('tt-modal')"><i class="fa-solid fa-rocket"></i> Launch</button>
+                </div>
+            </div>
+
+            <!-- Tool: 2D STICKMAN -->
+            <div class="tool-card" data-id="stickman-tool">
+                <div class="tool-banner">
+                    <div class="tool-banner-bg"></div>
+                    <i class="fa-regular fa-star star-icon" onclick="toggleFavorite(this, '2D STICKMAN', 'https://whatsapp.com/channel/0029VbDkvF14NVicAJtGYV0d/186', true)"></i>
+                    <img src="https://i.ibb.co/SDg606JB/IMG-20261108-WA0025.jpg" alt="Logo">
+                </div>
+                <div class="tool-content">
+                    <div>
+                        <div class="tool-title">2D STICKMAN</div>
+                        <span class="badge-new badge-stickman">PROMPT</span>
+                        <div class="tool-desc" style="color: #666; font-size: 9.5px;">2D STICKMAN ANIMATED HISTORY MASTER PROMPT</div>
+                    </div>
+                    <a href="https://whatsapp.com/channel/0029VbDkvF14NVicAJtGYV0d/186" target="_blank" class="btn-launch btn-stickman"><i class="fa-solid fa-arrow-up-right-from-square"></i> Open</a>
+                </div>
+            </div>
+
+            <!-- Tool: TIKTOK VIDEO DOWNLOADER -->
+            <div class="tool-card" data-id="apk-1">
+                <div class="tool-banner">
+                    <div class="tool-banner-bg"></div>
+                    <i class="fa-regular fa-star star-icon" onclick="toggleFavorite(this, 'TIKTOK VIDEO DOWNLOADER', 'https://www.mediafire.com/file/dq04mjdnf6jv0c3/TikTok_%2528MOD%2529_BY_AFZAAL.apk/file', true)"></i>
+                    <img src="https://i.ibb.co/SDg606JB/IMG-20261108-WA0025.jpg" alt="Logo">
+                </div>
+                <div class="tool-content">
+                    <div>
+                        <div class="tool-title">TIKTOK VIDEO DOWNLOADER</div>
+                        <span class="badge-new badge-apk">APK</span>
+                        <div class="tool-desc">AFZAAL TIKTOK VIDEO DOWNLOADER FOR ALL</div>
+                        <div class="link-status" data-url="https://www.mediafire.com/file/dq04mjdnf6jv0c3/TikTok_%2528MOD%2529_BY_AFZAAL.apk/file"><span style="color:var(--subtext-color);">Checking link...</span></div>
+                    </div>
+                    <a href="https://www.mediafire.com/file/dq04mjdnf6jv0c3/TikTok_%2528MOD%2529_BY_AFZAAL.apk/file" target="_blank" class="btn-launch btn-apk"><i class="fa-solid fa-download"></i> Download</a>
+                </div>
+            </div>
+
+            <!-- Tool: You cut Premium -->
+            <div class="tool-card" data-id="apk-2">
+                <div class="tool-banner">
+                    <div class="tool-banner-bg"></div>
+                    <i class="fa-regular fa-star star-icon" onclick="toggleFavorite(this, 'You cut Premium', 'https://www.mediafire.com/file/m2pn78stkkraf0i/YouCut_%2528Premium%2529_BY_AFZAAL.apk/file', true)"></i>
+                    <img src="https://i.ibb.co/SDg606JB/IMG-20261108-WA0025.jpg" alt="Logo">
+                </div>
+                <div class="tool-content">
+                    <div>
+                        <div class="tool-title">You cut Premium</div>
+                        <span class="badge-new badge-apk">APK</span>
+                        <div class="tool-desc">You cut Premium By AFZAAL FF FOR ALL</div>
+                        <div class="link-status" data-url="https://www.mediafire.com/file/m2pn78stkkraf0i/YouCut_%2528Premium%2529_BY_AFZAAL.apk/file"><span style="color:var(--subtext-color);">Checking link...</span></div>
+                    </div>
+                    <a href="https://www.mediafire.com/file/m2pn78stkkraf0i/YouCut_%2528Premium%2529_BY_AFZAAL.apk/file" target="_blank" class="btn-launch btn-apk"><i class="fa-solid fa-download"></i> Download</a>
+                </div>
+            </div>
+
+            <!-- Tool: TikTok MOD -->
+            <div class="tool-card" data-id="apk-3">
+                <div class="tool-banner">
+                    <div class="tool-banner-bg"></div>
+                    <i class="fa-regular fa-star star-icon" onclick="toggleFavorite(this, 'TikTok MOD', 'https://www.mediafire.com/file/dq04mjdnf6jv0c3/TikTok_%2528MOD%2529_BY_AFZAAL.apk/file', true)"></i>
+                    <img src="https://i.ibb.co/SDg606JB/IMG-20261108-WA0025.jpg" alt="Logo">
+                </div>
+                <div class="tool-content">
+                    <div>
+                        <div class="tool-title">TikTok MOD</div>
+                        <span class="badge-new badge-apk">APK</span>
+                        <div class="tool-desc">TikTok MOD By AFZAAL FF FOR ALL</div>
+                        <div class="link-status" data-url="https://www.mediafire.com/file/dq04mjdnf6jv0c3/TikTok_%2528MOD%2529_BY_AFZAAL.apk/file"><span style="color:var(--subtext-color);">Checking link...</span></div>
+                    </div>
+                    <a href="https://www.mediafire.com/file/dq04mjdnf6jv0c3/TikTok_%2528MOD%2529_BY_AFZAAL.apk/file" target="_blank" class="btn-launch btn-apk"><i class="fa-solid fa-download"></i> Download</a>
+                </div>
+            </div>
+
+            <!-- Tool: Image 2 Link -->
+            <div class="tool-card" data-id="apk-4">
+                <div class="tool-banner">
+                    <div class="tool-banner-bg"></div>
+                    <i class="fa-regular fa-star star-icon" onclick="toggleFavorite(this, 'Image 2 Link', 'https://www.mediafire.com/file/4ekriu7nwibdsxd/AFZAAL_IMAGE_2_LINK.apk/file', true)"></i>
+                    <img src="https://i.ibb.co/SDg606JB/IMG-20261108-WA0025.jpg" alt="Logo">
+                </div>
+                <div class="tool-content">
+                    <div>
+                        <div class="tool-title">Image 2 Link</div>
+                        <span class="badge-new badge-apk">APK</span>
+                        <div class="tool-desc">Image To Link By AFZAAL FF FOR ALL</div>
+                        <div class="link-status" data-url="https://www.mediafire.com/file/4ekriu7nwibdsxd/AFZAAL_IMAGE_2_LINK.apk/file"><span style="color:var(--subtext-color);">Checking link...</span></div>
+                    </div>
+                    <a href="https://www.mediafire.com/file/4ekriu7nwibdsxd/AFZAAL_IMAGE_2_LINK.apk/file" target="_blank" class="btn-launch btn-apk"><i class="fa-solid fa-download"></i> Download</a>
+                </div>
+            </div>
+
+            <!-- Tool: Inshot MOD -->
+            <div class="tool-card" data-id="apk-5">
+                <div class="tool-banner">
+                    <div class="tool-banner-bg"></div>
+                    <i class="fa-regular fa-star star-icon" onclick="toggleFavorite(this, 'Inshot MOD', 'https://www.mediafire.com/file/f8umuuyo379n0nq/InShot_%2528Patched%2529_BY_AFZAAL.apk/file', true)"></i>
+                    <img src="https://i.ibb.co/SDg606JB/IMG-20261108-WA0025.jpg" alt="Logo">
+                </div>
+                <div class="tool-content">
+                    <div>
+                        <div class="tool-title">Inshot MOD</div>
+                        <span class="badge-new badge-apk">APK</span>
+                        <div class="tool-desc">Inshot MOD By AFZAAL FF FOR ALL</div>
+                        <div class="link-status" data-url="https://www.mediafire.com/file/f8umuuyo379n0nq/InShot_%2528Patched%2529_BY_AFZAAL.apk/file"><span style="color:var(--subtext-color);">Checking link...</span></div>
+                    </div>
+                    <a href="https://www.mediafire.com/file/f8umuuyo379n0nq/InShot_%2528Patched%2529_BY_AFZAAL.apk/file" target="_blank" class="btn-launch btn-apk"><i class="fa-solid fa-download"></i> Download</a>
+                </div>
+            </div>
+
+            <!-- Tool: FREE FAKE NUMBERS -->
+            <div class="tool-card" data-id="fake-num-tool">
+                <div class="tool-banner">
+                    <div class="tool-banner-bg"></div>
+                    <i class="fa-regular fa-star star-icon" onclick="toggleFavorite(this, 'FREE FAKE NUMBERS', 'https://wa.me/+923372938160', true)"></i>
+                    <img src="https://i.ibb.co/SDg606JB/IMG-20261108-WA0025.jpg" alt="Logo">
+                </div>
+                <div class="tool-content">
+                    <div>
+                        <div class="tool-title">FREE FAKE NUMBERS</div>
+                        <span class="badge-new badge-vip">VIP</span>
+                        <div class="tool-desc">FREE FAKE NUMBERS BY AFZAAL FF FOR ALL</div>
+                        <div class="link-status" data-url="https://wa.me/+923372938160"><span style="color:var(--subtext-color);">Checking link...</span></div>
+                    </div>
+                    <a href="https://wa.me/+923372938160" target="_blank" class="btn-launch btn-git"><i class="fa-solid fa-arrow-up-right-from-square"></i> Open</a>
+                </div>
+            </div>
+
+            <!-- Tool: PINTEREST VIDEO DOWNLOADER -->
+            <div class="tool-card" data-id="pinterest-tool">
+                <div class="tool-banner">
+                    <div class="tool-banner-bg"></div>
+                    <i class="fa-regular fa-star star-icon" onclick="toggleFavorite(this, 'PINTEREST VIDEO DOWNLOADER', 'https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://klickpin.com/en4&ved=2ahUKEwjDi4-Z_7eXAxX0RlcBHW9AEkMQFnoECA8QAQ&sqi=2&usg=AOvVaw1oPokL0eIK_KzF7T4IwWBl', true)"></i>
+                    <img src="https://i.ibb.co/SDg606JB/IMG-20261108-WA0025.jpg" alt="Logo">
+                </div>
+                <div class="tool-content">
+                    <div>
+                        <div class="tool-title">PINTEREST VIDEO DOWNLOADER</div>
+                        <span class="badge-new badge-yt">WEB</span>
+                        <div class="tool-desc">DOWNLOAD ANY PINTEREST VIDEO BY THIS WEBSITE</div>
+                        <div class="link-status" data-url="https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://klickpin.com/en4&ved=2ahUKEwjDi4-Z_7eXAxX0RlcBHW9AEkMQFnoECA8QAQ&sqi=2&usg=AOvVaw1oPokL0eIK_KzF7T4IwWBl"><span style="color:var(--subtext-color);">Checking link...</span></div>
+                    </div>
+                    <a href="https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://klickpin.com/en4&ved=2ahUKEwjDi4-Z_7eXAxX0RlcBHW9AEkMQFnoECA8QAQ&sqi=2&usg=AOvVaw1oPokL0eIK_KzF7T4IwWBl" target="_blank" class="btn-launch btn-yt"><i class="fa-solid fa-arrow-up-right-from-square"></i> Open</a>
+                </div>
+            </div>
+
+            <!-- Tool: WA CHANNEL REACTS -->
+            <div class="tool-card" data-id="wa-reacts-tool">
+                <div class="tool-banner">
+                    <div class="tool-banner-bg"></div>
+                    <i class="fa-regular fa-star star-icon" onclick="toggleFavorite(this, 'WA CHANNEL REACTS', 'https://asitha.top/login?ref=jadukeid5324', true)"></i>
+                    <img src="https://i.ibb.co/SDg606JB/IMG-20261108-WA0025.jpg" alt="Logo">
+                </div>
+                <div class="tool-content">
+                    <div>
+                        <div class="tool-title">WA CHANNEL REACTS</div>
+                        <span class="badge-new badge-tt">WA</span>
+                        <div class="tool-desc">WHATSAPP CHANNELS FREE UNLIMITED REACTS BY AFZAAL FF</div>
+                        <div class="link-status" data-url="https://asitha.top/login?ref=jadukeid5324"><span style="color:var(--subtext-color);">Checking link...</span></div>
+                    </div>
+                    <a href="https://asitha.top/login?ref=jadukeid5324" target="_blank" class="btn-launch btn-tt"><i class="fa-solid fa-arrow-up-right-from-square"></i> Open</a>
+                </div>
+            </div>
+
+            <!-- Tool: PRO BOY FREE HOSTING -->
+            <div class="tool-card" data-id="pro-host-tool">
+                <div class="tool-banner">
+                    <div class="tool-banner-bg"></div>
+                    <i class="fa-regular fa-star star-icon" onclick="toggleFavorite(this, 'PRO BOY FREE HOSTING', 'https://pro-hostify.free.nf', true)"></i>
+                    <img src="https://i.ibb.co/SDg606JB/IMG-20261108-WA0025.jpg" alt="Logo">
+                </div>
+                <div class="tool-content">
+                    <div>
+                        <div class="tool-title">PRO BOY FREE HOSTING</div>
+                        <span class="badge-new badge-vip">HOST</span>
+                        <div class="tool-desc">HOST YOUR CODES CONVERT INTO RESPONSIVE WEBSITE 🔗</div>
+                        <div class="link-status" data-url="https://pro-hostify.free.nf"><span style="color:var(--subtext-color);">Checking link...</span></div>
+                    </div>
+                    <a href="https://pro-hostify.free.nf" target="_blank" class="btn-launch btn-git"><i class="fa-solid fa-arrow-up-right-from-square"></i> Open</a>
+                </div>
+            </div>
+
+            <!-- Tool: AFZAAL VIRAL TOOLKIT -->
+            <div class="tool-card" data-id="viral-toolkit-tool">
+                <div class="tool-banner">
+                    <div class="tool-banner-bg"></div>
+                    <i class="fa-regular fa-star star-icon" onclick="toggleFavorite(this, 'AFZAAL VIRAL TOOLKIT', 'https://toolkit.page.gd/t/hassan-2nd-toolkit', true)"></i>
+                    <img src="https://i.ibb.co/SDg606JB/IMG-20261108-WA0025.jpg" alt="Logo">
+                </div>
+                <div class="tool-content">
+                    <div>
+                        <div class="tool-title">AFZAAL VIRAL TOOLKIT</div>
+                        <span class="badge-new badge-stickman">TOOLKIT</span>
+                        <div class="tool-desc">MY OFFICIAL VIRAL TOOLKIT FOR ALL FREE 😊</div>
+                        <div class="link-status" data-url="https://toolkit.page.gd/t/hassan-2nd-toolkit"><span style="color:var(--subtext-color);">Checking link...</span></div>
+                    </div>
+                    <a href="https://toolkit.page.gd/t/hassan-2nd-toolkit" target="_blank" class="btn-launch btn-stickman"><i class="fa-solid fa-arrow-up-right-from-square"></i> Open</a>
+                </div>
+            </div>
+
+            <!-- Tool: CAPCUT PRO -->
+            <div class="tool-card" data-id="capcut-pro-tool">
+                <div class="tool-banner">
+                    <div class="tool-banner-bg"></div>
+                    <i class="fa-regular fa-star star-icon" onclick="toggleFavorite(this, 'CAPCUT PRO', 'https://www.mediafire.com/file/znuxt70otip24cv/CapCut_Ultra_Fixed_Versation.apk/file', true)"></i>
+                    <img src="https://i.ibb.co/SDg606JB/IMG-20261108-WA0025.jpg" alt="Logo">
+                </div>
+                <div class="tool-content">
+                    <div>
+                        <div class="tool-title">CAPCUT PRO</div>
+                        <span class="badge-new badge-apk">APK</span>
+                        <div class="tool-desc">ALL ERROR FIXED ✅ NO VPN NEED 🚫 ALL PRO ACTIVE 💎</div>
+                        <div class="link-status" data-url="https://www.mediafire.com/file/znuxt70otip24cv/CapCut_Ultra_Fixed_Versation.apk/file"><span style="color:var(--subtext-color);">Checking link...</span></div>
+                    </div>
+                    <a href="https://www.mediafire.com/file/znuxt70otip24cv/CapCut_Ultra_Fixed_Versation.apk/file" target="_blank" class="btn-launch btn-apk"><i class="fa-solid fa-download"></i> Download</a>
+                </div>
+            </div>
+
+            <!-- NEW TOOL: Alyan Automation Batch 1 -->
+            <div class="tool-card" data-id="alyan-auto">
+                <div class="tool-banner">
+                    <div class="tool-banner-bg"></div>
+                    <i class="fa-regular fa-star star-icon" onclick="toggleFavorite(this, 'Alyan Automation Batch 1', 'https://drive.google.com/drive/folders/1YE5zoXx6msybhBdeClY78hKZGXl0x7jz', true)"></i>
+                    <img src="https://i.ibb.co/SDg606JB/IMG-20261108-WA0025.jpg" alt="Logo">
+                </div>
+                <div class="tool-content">
+                    <div>
+                        <div class="tool-title">Alyan Automation Batch 1</div>
+                        <span class="badge-new badge-course">COURSE</span>
+                        <div class="tool-desc">Alyan Automation Batch 1 drive folder learning materials.</div>
+                        <div class="link-status" data-url="https://drive.google.com/drive/folders/1YE5zoXx6msybhBdeClY78hKZGXl0x7jz"><span style="color:var(--subtext-color);">Checking link...</span></div>
+                    </div>
+                    <a href="https://drive.google.com/drive/folders/1YE5zoXx6msybhBdeClY78hKZGXl0x7jz" target="_blank" class="btn-launch btn-git"><i class="fa-solid fa-arrow-up-right-from-square"></i> Open Drive</a>
+                </div>
+            </div>
+
+            <!-- NEW TOOL: YouTube Masterclass -->
+            <div class="tool-card" data-id="yt-masterclass">
+                <div class="tool-banner">
+                    <div class="tool-banner-bg"></div>
+                    <i class="fa-regular fa-star star-icon" onclick="toggleFavorite(this, 'YouTube Masterclass', 'https://drive.google.com/drive/folders/1S8-o15EYNW_JFMUzIqrQCTaTvRmhsC-1', true)"></i>
+                    <img src="https://i.ibb.co/SDg606JB/IMG-20261108-WA0025.jpg" alt="Logo">
+                </div>
+                <div class="tool-content">
+                    <div>
+                        <div class="tool-title">YouTube Masterclass</div>
+                        <span class="badge-new badge-yt">MASTERCLASS</span>
+                        <div class="tool-desc">Master YouTube growth, editing, and content strategy.</div>
+                        <div class="link-status" data-url="https://drive.google.com/drive/folders/1S8-o15EYNW_JFMUzIqrQCTaTvRmhsC-1"><span style="color:var(--subtext-color);">Checking link...</span></div>
+                    </div>
+                    <a href="https://drive.google.com/drive/folders/1S8-o15EYNW_JFMUzIqrQCTaTvRmhsC-1" target="_blank" class="btn-launch btn-yt"><i class="fa-solid fa-arrow-up-right-from-square"></i> Open Drive</a>
+                </div>
+            </div>
+
+            <!-- NEW TOOL: YouTube Empire Builder -->
+            <div class="tool-card" data-id="yt-empire">
+                <div class="tool-banner">
+                    <div class="tool-banner-bg"></div>
+                    <i class="fa-regular fa-star star-icon" onclick="toggleFavorite(this, 'YouTube Empire Builder', 'https://drive.google.com/drive/folders/1sQNtzO5ALtkFqgZZ0M4wejmE-zHX3qN0', true)"></i>
+                    <img src="https://i.ibb.co/SDg606JB/IMG-20261108-WA0025.jpg" alt="Logo">
+                </div>
+                <div class="tool-content">
+                    <div>
+                        <div class="tool-title">YouTube Empire Builder</div>
+                        <span class="badge-new badge-yt">EMPIRE</span>
+                        <div class="tool-desc">Build and scale your YouTube empire successfully.</div>
+                        <div class="link-status" data-url="https://drive.google.com/drive/folders/1sQNtzO5ALtkFqgZZ0M4wejmE-zHX3qN0"><span style="color:var(--subtext-color);">Checking link...</span></div>
+                    </div>
+                    <a href="https://drive.google.com/drive/folders/1sQNtzO5ALtkFqgZZ0M4wejmE-zHX3qN0" target="_blank" class="btn-launch btn-yt"><i class="fa-solid fa-arrow-up-right-from-square"></i> Open Drive</a>
+                </div>
+            </div>
+
+            <!-- NEW TOOL: Cybersecurity Complete Course -->
+            <div class="tool-card" data-id="cyber-sec">
+                <div class="tool-banner">
+                    <div class="tool-banner-bg"></div>
+                    <i class="fa-regular fa-star star-icon" onclick="toggleFavorite(this, 'Cybersecurity Complete Course', 'https://drive.google.com/drive/folders/1RPN2wBIajy7HuSU_FOgL5vA4dIrkgZnA', true)"></i>
+                    <img src="https://i.ibb.co/SDg606JB/IMG-20261108-WA0025.jpg" alt="Logo">
+                </div>
+                <div class="tool-content">
+                    <div>
+                        <div class="tool-title" style="font-size: 11px;">Cybersecurity Complete Course</div>
+                        <span class="badge-new badge-vip">SECURITY</span>
+                        <div class="tool-desc">Complete cybersecurity learning course drive package.</div>
+                        <div class="link-status" data-url="https://drive.google.com/drive/folders/1RPN2wBIajy7HuSU_FOgL5vA4dIrkgZnA"><span style="color:var(--subtext-color);">Checking link...</span></div>
+                    </div>
+                    <a href="https://drive.google.com/drive/folders/1RPN2wBIajy7HuSU_FOgL5vA4dIrkgZnA" target="_blank" class="btn-launch btn-git"><i class="fa-solid fa-arrow-up-right-from-square"></i> Open Drive</a>
+                </div>
+            </div>
+
+            <!-- NEW TOOL: 1-40+ Courses -->
+            <div class="tool-card" data-id="courses-40">
+                <div class="tool-banner">
+                    <div class="tool-banner-bg"></div>
+                    <i class="fa-regular fa-star star-icon" onclick="toggleFavorite(this, '1-40+ Courses', 'https://drive.google.com/drive/folders/1PWwB7ax0SO-Y_H4j2plt6juOtcEgc9EY', true)"></i>
+                    <img src="https://i.ibb.co/SDg606JB/IMG-20261108-WA0025.jpg" alt="Logo">
+                </div>
+                <div class="tool-content">
+                    <div>
+                        <div class="tool-title">1-40+ Courses</div>
+                        <span class="badge-new badge-course">BUNDLE</span>
+                        <div class="tool-desc">Over 40+ professional courses collection.</div>
+                        <div class="link-status" data-url="https://drive.google.com/drive/folders/1PWwB7ax0SO-Y_H4j2plt6juOtcEgc9EY"><span style="color:var(--subtext-color);">Checking link...</span></div>
+                    </div>
+                    <a href="https://drive.google.com/drive/folders/1PWwB7ax0SO-Y_H4j2plt6juOtcEgc9EY" target="_blank" class="btn-launch btn-git"><i class="fa-solid fa-arrow-up-right-from-square"></i> Open Drive</a>
+                </div>
+            </div>
+
+            <!-- NEW TOOL: 5TB Data -->
+            <div class="tool-card" data-id="data-5tb">
+                <div class="tool-banner">
+                    <div class="tool-banner-bg"></div>
+                    <i class="fa-regular fa-star star-icon" onclick="toggleFavorite(this, '5TB Data', 'https://drive.google.com/drive/folders/1tnZ2v3HhrMzaD0mQ8SNDJ7X8O1mOA-j2', true)"></i>
+                    <img src="https://i.ibb.co/SDg606JB/IMG-20261108-WA0025.jpg" alt="Logo">
+                </div>
+                <div class="tool-content">
+                    <div>
+                        <div class="tool-title">5TB Data</div>
+                        <span class="badge-new badge-apk">DATA</span>
+                        <div class="tool-desc">Massive 5TB valuable digital data and assets.</div>
+                        <div class="link-status" data-url="https://drive.google.com/drive/folders/1tnZ2v3HhrMzaD0mQ8SNDJ7X8O1mOA-j2"><span style="color:var(--subtext-color);">Checking link...</span></div>
+                    </div>
+                    <a href="https://drive.google.com/drive/folders/1tnZ2v3HhrMzaD0mQ8SNDJ7X8O1mOA-j2" target="_blank" class="btn-launch btn-apk"><i class="fa-solid fa-arrow-up-right-from-square"></i> Open Drive</a>
+                </div>
+            </div>
+
+            <!-- NEW TOOL: 15 Million Digital Products -->
+            <div class="tool-card" data-id="products-15m">
+                <div class="tool-banner">
+                    <div class="tool-banner-bg"></div>
+                    <i class="fa-regular fa-star star-icon" onclick="toggleFavorite(this, '15 Million Digital Products', 'https://drive.google.com/drive/folders/1YWdpEKFGyIclbXIhJ0pCiCkEAbZqt-T4', true)"></i>
+                    <img src="https://i.ibb.co/SDg606JB/IMG-20261108-WA0025.jpg" alt="Logo">
+                </div>
+                <div class="tool-content">
+                    <div>
+                        <div class="tool-title" style="font-size: 11px;">15 Million Digital Products</div>
+                        <span class="badge-new badge-stickman">PRODUCTS</span>
+                        <div class="tool-desc">Huge bundle of 15 million digital assets.</div>
+                        <div class="link-status" data-url="https://drive.google.com/drive/folders/1YWdpEKFGyIclbXIhJ0pCiCkEAbZqt-T4"><span style="color:var(--subtext-color);">Checking link...</span></div>
+                    </div>
+                    <a href="https://drive.google.com/drive/folders/1YWdpEKFGyIclbXIhJ0pCiCkEAbZqt-T4" target="_blank" class="btn-launch btn-stickman"><i class="fa-solid fa-arrow-up-right-from-square"></i> Open Drive</a>
+                </div>
+            </div>
+
+            <!-- NEW TOOL: 200TB Data -->
+            <div class="tool-card" data-id="data-200tb">
+                <div class="tool-banner">
+                    <div class="tool-banner-bg"></div>
+                    <i class="fa-regular fa-star star-icon" onclick="toggleFavorite(this, '200TB Data', 'https://drive.google.com/drive/folders/1vxqMqhBwDvYzx6C3vRbLCJKaJqqasT8P', true)"></i>
+                    <img src="https://i.ibb.co/SDg606JB/IMG-20261108-WA0025.jpg" alt="Logo">
+                </div>
+                <div class="tool-content">
+                    <div>
+                        <div class="tool-title">200TB Data</div>
+                        <span class="badge-new badge-vip">MEGA DATA</span>
+                        <div class="tool-desc">Ultimate 200TB ultra data collection drive folder.</div>
+                        <div class="link-status" data-url="https://drive.google.com/drive/folders/1vxqMqhBwDvYzx6C3vRbLCJKaJqqasT8P"><span style="color:var(--subtext-color);">Checking link...</span></div>
+                    </div>
+                    <a href="https://drive.google.com/drive/folders/1vxqMqhBwDvYzx6C3vRbLCJKaJqqasT8P" target="_blank" class="btn-launch btn-git"><i class="fa-solid fa-arrow-up-right-from-square"></i> Open Drive</a>
+                </div>
+            </div>
+
+            <!-- NEW TOOL: 1000 Ai Stories Reels Bundle -->
+            <div class="tool-card" data-id="ai-stories-reels">
+                <div class="tool-banner">
+                    <div class="tool-banner-bg"></div>
+                    <i class="fa-regular fa-star star-icon" onclick="toggleFavorite(this, '1000 Ai Stories Reels Bundle', 'https://drive.google.com/drive/folders/1mD1wqiYlauGplszIbl19uSI7G8MC4EXX', true)"></i>
+                    <img src="https://i.ibb.co/SDg606JB/IMG-20261108-WA0025.jpg" alt="Logo">
+                </div>
+                <div class="tool-content">
+                    <div>
+                        <div class="tool-title" style="font-size: 11px;">1000 Ai Stories Reels Bundle</div>
+                        <span class="badge-new badge-stickman">AI BUNDLE</span>
+                        <div class="tool-desc">1000 AI generated stories reels bundle for viral growth.</div>
+                        <div class="link-status" data-url="https://drive.google.com/drive/folders/1mD1wqiYlauGplszIbl19uSI7G8MC4EXX"><span style="color:var(--subtext-color);">Checking link...</span></div>
+                    </div>
+                    <a href="https://drive.google.com/drive/folders/1mD1wqiYlauGplszIbl19uSI7G8MC4EXX" target="_blank" class="btn-launch btn-stickman"><i class="fa-solid fa-arrow-up-right-from-square"></i> Open Drive</a>
+                </div>
+            </div>
+
+            <!-- RESOURCE TOOL 1 -->
+            <div class="tool-card" data-id="new-tool-1">
+                <div class="tool-banner">
+                    <div class="tool-banner-bg"></div>
+                    <i class="fa-regular fa-star star-icon" onclick="toggleFavorite(this, 'VIDEO EDITING RESOURCES', 'https://drive.google.com/drive/folders/195yGFgnx4N363Q56qRlkQzzK98Mhh0i5', true)"></i>
+                    <img src="https://i.ibb.co/SDg606JB/IMG-20261108-WA0025.jpg" alt="Logo">
+                </div>
+                <div class="tool-content">
+                    <div>
+                        <div class="tool-title">VIDEO EDITING RESOURCES</div>
+                        <span class="badge-new badge-vip">3D EMOJI</span>
+                        <div class="tool-desc">YOU GOT 3D EMOJI FOR YOU EDITING BY AFZAAL FF</div>
+                        <div class="link-status" data-url="https://drive.google.com/drive/folders/195yGFgnx4N363Q56qRlkQzzK98Mhh0i5"><span style="color:var(--subtext-color);">Checking link...</span></div>
+                    </div>
+                    <a href="https://drive.google.com/drive/folders/195yGFgnx4N363Q56qRlkQzzK98Mhh0i5" target="_blank" class="btn-launch btn-git"><i class="fa-solid fa-arrow-up-right-from-square"></i> Open</a>
+                </div>
+            </div>
+
+            <!-- RESOURCE TOOL 2 -->
+            <div class="tool-card" data-id="new-tool-2">
+                <div class="tool-banner">
+                    <div class="tool-banner-bg"></div>
+                    <i class="fa-regular fa-star star-icon" onclick="toggleFavorite(this, 'MOTIVATION 3D MASTER PROMPT', 'https://docs.google.com/document/d/1csBVB5_hr_A9a9-mtKXuQnBqHwrv4R6USBC-EwoUgus/edit?usp=drive_link', true)"></i>
+                    <img src="https://i.ibb.co/SDg606JB/IMG-20261108-WA0025.jpg" alt="Logo">
+                </div>
+                <div class="tool-content">
+                    <div>
+                        <div class="tool-title">MOTIVATION 3D MASTER PROMPT</div>
+                        <span class="badge-new badge-stickman">PROMPT</span>
+                        <div class="tool-desc">CREATE THE MOTIVATION 3D MASTER VIDEO BY THIS PROMPT</div>
+                        <div class="link-status" data-url="https://docs.google.com/document/d/1csBVB5_hr_A9a9-mtKXuQnBqHwrv4R6USBC-EwoUgus/edit?usp=drive_link"><span style="color:var(--subtext-color);">Checking link...</span></div>
+                    </div>
+                    <a href="https://docs.google.com/document/d/1csBVB5_hr_A9a9-mtKXuQnBqHwrv4R6USBC-EwoUgus/edit?usp=drive_link" target="_blank" class="btn-launch btn-stickman"><i class="fa-solid fa-arrow-up-right-from-square"></i> Open</a>
+                </div>
+            </div>
+
+            <!-- RESOURCE TOOL 3 -->
+            <div class="tool-card" data-id="new-tool-3">
+                <div class="tool-banner">
+                    <div class="tool-banner-bg"></div>
+                    <i class="fa-regular fa-star star-icon" onclick="toggleFavorite(this, '100 IMAGE PERSPECTIVE & CAMERA SHORTCODE BUNDLE', 'https://drive.google.com/file/d/1Mb7KIzJi0iYnaGGCX47RODZ2p_DVLbZr/view?usp=drive_link', true)"></i>
+                    <img src="https://i.ibb.co/SDg606JB/IMG-20261108-WA0025.jpg" alt="Logo">
+                </div>
+                <div class="tool-content">
+                    <div>
+                        <div class="tool-title" style="font-size: 11px;">100 IMAGE PERSPECTIVE BUNDLE</div>
+                        <span class="badge-new badge-yt">BUNDLE</span>
+                        <div class="tool-desc">100 CAMERA PERSPECTIVE & SHORTCODES ✅ DIFFERENT ANGLES ✅</div>
+                        <div class="link-status" data-url="https://drive.google.com/file/d/1Mb7KIzJi0iYnaGGCX47RODZ2p_DVLbZr/view?usp=drive_link"><span style="color:var(--subtext-color);">Checking link...</span></div>
+                    </div>
+                    <a href="https://drive.google.com/file/d/1Mb7KIzJi0iYnaGGCX47RODZ2p_DVLbZr/view?usp=drive_link" target="_blank" class="btn-launch btn-yt"><i class="fa-solid fa-arrow-up-right-from-square"></i> Open</a>
+                </div>
+            </div>
+
+            <!-- RESOURCE TOOL 4 -->
+            <div class="tool-card" data-id="new-tool-4">
+                <div class="tool-banner">
+                    <div class="tool-banner-bg"></div>
+                    <i class="fa-regular fa-star star-icon" onclick="toggleFavorite(this, 'VIDEO EDITING BUNDLE', 'https://drive.google.com/drive/folders/1kZxX4_nQ7MswF8uLyZj3VZihBj4iWKQN?usp=drive_link', true)"></i>
+                    <img src="https://i.ibb.co/SDg606JB/IMG-20261108-WA0025.jpg" alt="Logo">
+                </div>
+                <div class="tool-content">
+                    <div>
+                        <div class="tool-title">VIDEO EDITING BUNDLE</div>
+                        <span class="badge-new badge-tt">RESOURCES</span>
+                        <div class="tool-desc">GOT VIDEO EDITING BUNDLE BY CLICKING ON 👇 BUTTON</div>
+                        <div class="link-status" data-url="https://drive.google.com/drive/folders/1kZxX4_nQ7MswF8uLyZj3VZihBj4iWKQN?usp=drive_link"><span style="color:var(--subtext-color);">Checking link...</span></div>
+                    </div>
+                    <a href="https://drive.google.com/drive/folders/1kZxX4_nQ7MswF8uLyZj3VZihBj4iWKQN?usp=drive_link" target="_blank" class="btn-launch btn-tt"><i class="fa-solid fa-arrow-up-right-from-square"></i> Open 👇</a>
+                </div>
+            </div>
+
+            <!-- RESOURCE TOOL 5 -->
+            <div class="tool-card" data-id="new-tool-5">
+                <div class="tool-banner">
+                    <div class="tool-banner-bg"></div>
+                    <i class="fa-regular fa-star star-icon" onclick="toggleFavorite(this, 'TINY POODLE VS INTERACTIVE TOY', 'https://docs.google.com/document/d/1D_tSHS0XNI1Tc6h6nL5NUS3-o5dwQOymCQxaw_7zoAM/edit?usp=drive_link', true)"></i>
+                    <img src="https://i.ibb.co/SDg606JB/IMG-20261108-WA0025.jpg" alt="Logo">
+                </div>
+                <div class="tool-content">
+                    <div>
+                        <div class="tool-title" style="font-size: 11px;">TINY POODLE VS INTERACTIVE TOY</div>
+                        <span class="badge-new badge-stickman">PROMPT</span>
+                        <div class="tool-desc">GOT FULL PROMPT OF POODLE VS INTERACTIVE</div>
+                        <div class="link-status" data-url="https://docs.google.com/document/d/1D_tSHS0XNI1Tc6h6nL5NUS3-o5dwQOymCQxaw_7zoAM/edit?usp=drive_link"><span style="color:var(--subtext-color);">Checking link...</span></div>
+                    </div>
+                    <a href="https://docs.google.com/document/d/1D_tSHS0XNI1Tc6h6nL5NUS3-o5dwQOymCQxaw_7zoAM/edit?usp=drive_link" target="_blank" class="btn-launch btn-stickman"><i class="fa-solid fa-arrow-up-right-from-square"></i> Open</a>
+                </div>
+            </div>
+
+            <!-- RESOURCE TOOL 6 -->
+            <div class="tool-card" data-id="new-tool-6">
+                <div class="tool-banner">
+                    <div class="tool-banner-bg"></div>
+                    <i class="fa-regular fa-star star-icon" onclick="toggleFavorite(this, 'PUNCH HOLE TRANSECTION', 'https://drive.google.com/drive/folders/16Jr3qFv9TiI5tmVzaACYrnU2TQJQ2PA0', true)"></i>
+                    <img src="https://i.ibb.co/SDg606JB/IMG-20261108-WA0025.jpg" alt="Logo">
+                </div>
+                <div class="tool-content">
+                    <div>
+                        <div class="tool-title">PUNCH HOLE TRANSECTION</div>
+                        <span class="badge-new badge-vip">RESOURCES</span>
+                        <div class="tool-desc">MAKE A PUNCH HOLE (THE AFTER EFFECT) FIR EDITING</div>
+                        <div class="link-status" data-url="https://drive.google.com/drive/folders/16Jr3qFv9TiI5tmVzaACYrnU2TQJQ2PA0"><span style="color:var(--subtext-color);">Checking link...</span></div>
+                    </div>
+                    <a href="https://drive.google.com/drive/folders/16Jr3qFv9TiI5tmVzaACYrnU2TQJQ2PA0" target="_blank" class="btn-launch btn-git"><i class="fa-solid fa-arrow-up-right-from-square"></i> Open</a>
+                </div>
+            </div>
+
+            <!-- RESOURCE TOOL 7 -->
+            <div class="tool-card" data-id="new-tool-7">
+                <div class="tool-banner">
+                    <div class="tool-banner-bg"></div>
+                    <i class="fa-regular fa-star star-icon" onclick="toggleFavorite(this, 'SPECIAL FONTS BUNDLE', 'https://drive.google.com/drive/folders/1ln1jc8u7yAQ_3SPF9vdjujfn81pWSdJd', true)"></i>
+                    <img src="https://i.ibb.co/SDg606JB/IMG-20261108-WA0025.jpg" alt="Logo">
+                </div>
+                <div class="tool-content">
+                    <div>
+                        <div class="tool-title">SPECIAL FONTS BUNDLE</div>
+                        <span class="badge-new badge-apk">RESOURCES</span>
+                        <div class="tool-desc">MAKE YOUR FONTS FROM DEFAULT TO CRAZY BY THIS BY AFZAAL FF</div>
+                        <div class="link-status" data-url="https://drive.google.com/drive/folders/1ln1jc8u7yAQ_3SPF9vdjujfn81pWSdJd"><span style="color:var(--subtext-color);">Checking link...</span></div>
+                    </div>
+                    <a href="https://drive.google.com/drive/folders/1ln1jc8u7yAQ_3SPF9vdjujfn81pWSdJd" target="_blank" class="btn-launch btn-apk"><i class="fa-solid fa-arrow-up-right-from-square"></i> Open</a>
+                </div>
+            </div>
+
+            <!-- RESOURCE TOOL 8 -->
+            <div class="tool-card" data-id="new-tool-8">
+                <div class="tool-banner">
+                    <div class="tool-banner-bg"></div>
+                    <i class="fa-regular fa-star star-icon" onclick="toggleFavorite(this, 'PAPER ASSETS', 'https://drive.google.com/drive/folders/16pVd97eGDbq-l0kBnXmJjWl1ZkGMhqpd', true)"></i>
+                    <img src="https://i.ibb.co/SDg606JB/IMG-20261108-WA0025.jpg" alt="Logo">
+                </div>
+                <div class="tool-content">
+                    <div>
+                        <div class="tool-title">PAPER ASSETS</div>
+                        <span class="badge-new badge-vali">RESOURCES</span>
+                        <div class="tool-desc">PAPER ASSETS FOR EDITING HERE BY AFZAAL FF</div>
+                        <div class="link-status" data-url="https://drive.google.com/drive/folders/16pVd97eGDbq-l0kBnXmJjWl1ZkGMhqpd"><span style="color:var(--subtext-color);">Checking link...</span></div>
+                    </div>
+                    <a href="https://drive.google.com/drive/folders/16pVd97eGDbq-l0kBnXmJjWl1ZkGMhqpd" target="_blank" class="btn-launch btn-vali"><i class="fa-solid fa-arrow-up-right-from-square"></i> Open</a>
+                </div>
+            </div>
+
+            <!-- NEW TOOL: AFZAAL TIKTOK VIDEO DOWNLOADER -->
+            <div class="tool-card" data-id="hassan-ttvd-web">
+                <div class="tool-banner">
+                    <div class="tool-banner-bg"></div>
+                    <i class="fa-regular fa-star star-icon" onclick="toggleFavorite(this, 'AFZAAL TIKTOK VIDEO DOWNLOADER', 'https://hassan-ttvd.vercel.app/', true)"></i>
+                    <img src="https://i.ibb.co/SDg606JB/IMG-20261108-WA0025.jpg" alt="Logo">
+                </div>
+                <div class="tool-content">
+                    <div>
+                        <div class="tool-title" style="font-size: 11px;">AFZAAL TIKTOK VIDEO DOWNLOADER</div>
+                        <span class="badge-new badge-tt">WEB TOOL</span>
+                        <div class="tool-desc">
+                            HERE MY NEW TIKTOK DOWNLOADER <span class="rgb-text">(BY AFZAAL FF)</span>
+                        </div>
+                        <div class="link-status" data-url="https://hassan-ttvd.vercel.app/"><span style="color:var(--subtext-color);">Checking link...</span></div>
+                    </div>
+                    <a href="https://hassan-ttvd.vercel.app/" target="_blank" class="btn-launch btn-tt"><i class="fa-solid fa-arrow-up-right-from-square"></i> Open Site</a>
+                </div>
+            </div>
+
+            <!-- TOOL: AFZAAL ASITHA TUTORIAL -->
+            <div class="tool-card" data-id="hassan-asitha-tutorial">
+                <div class="tool-banner">
+                    <div class="tool-banner-bg"></div>
+                    <i class="fa-regular fa-star star-icon" onclick="toggleFavorite(this, 'AFZAAL ASITHA TUTORIAL', 'https://hassan-tutorial.vercel.app', true)"></i>
+                    <img src="https://i.ibb.co/SDg606JB/IMG-20261108-WA0025.jpg" alt="Logo">
+                </div>
+                <div class="tool-content">
+                    <div>
+                        <div class="tool-title" style="font-size: 11px;">AFZAAL ASITHA TUTORIAL</div>
+                        <span class="badge-new badge-vip">TUTORIAL & REACTS</span>
+                        <div class="tool-desc">
+                            FREE OF COST REACTS AT <a href="https://asitha.top" target="_blank" style="color:#00f3ff; text-decoration:underline;">https://asitha.top</a> NO PAID THINGS INVOLVED
+                        </div>
+                        <div class="link-status" data-url="https://hassan-tutorial.vercel.app"><span style="color:var(--subtext-color);">Checking tutorial link...</span></div>
+                    </div>
+                    <a href="https://hassan-tutorial.vercel.app" target="_blank" class="btn-launch btn-git"><i class="fa-solid fa-graduation-cap"></i> Check Tutorial</a>
+                </div>
+            </div>
+
+            <!-- NEWLY ADDED TOOL: AFZAAL PORTFOLIO -->
+            <div class="tool-card" data-id="hassan-portfolio">
+                <div class="tool-banner">
+                    <div class="tool-banner-bg"></div>
+                    <i class="fa-regular fa-star star-icon" onclick="toggleFavorite(this, 'AFZAAL PORTFOLIO', 'https://hassan-portfolio-v1-one.vercel.app', true)"></i>
+                    <img src="https://i.ibb.co/SDg606JB/IMG-20261108-WA0025.jpg" alt="Logo">
+                </div>
+                <div class="tool-content">
+                    <div>
+                        <div class="tool-title">AFZAAL PORTFOLIO</div>
+                        <span class="badge-new badge-stickman">PORTFOLIO</span>
+                        <div class="tool-desc">
+                            PERSONAL PORTFOLIO WEBSITE 🔗 BY <span class="rgb-text">AFZAAL FF</span>
+                        </div>
+                        <div class="link-status" data-url="https://hassan-portfolio-v1-one.vercel.app"><span style="color:var(--subtext-color);">Checking portfolio link...</span></div>
+                    </div>
+                    <a href="https://hassan-portfolio-v1-one.vercel.app" target="_blank" class="btn-launch btn-stickman"><i class="fa-solid fa-globe"></i> Visit Portfolio</a>
+                </div>
+            </div>
+
+            <!-- TOOL: SATISFYING CEMENT CRAFT PROMPT -->
+            <div class="tool-card" data-id="cement-craft-garden-prompt">
+                <div class="tool-banner">
+                    <div class="tool-banner-bg"></div>
+                    <i class="fa-regular fa-star star-icon" onclick="toggleFavorite(this, 'SATISFYING CEMENT CRAFT & CUTE GARDEN DECOR TRANSFORMATION MASTER PROMPT', 'https://docs.google.com/document/d/17QKBAbfEwTkYI8TlUQ8_yrbpZVFQplXOSZIYRnX15q8/edit?usp=drive_link', true)"></i>
+                    <img src="https://i.ibb.co/SDg606JB/IMG-20261108-WA0025.jpg" alt="Logo">
+                </div>
+                <div class="tool-content">
+                    <div>
+                        <div class="tool-title" style="font-size: 10.5px;">SATISFYING CEMENT CRAFT MASTER PROMPT</div>
+                        <span class="badge-new badge-stickman">MASTER PROMPT</span>
+                        <div class="tool-desc">Ready-to-use SATISFYING CEMENT CRAFT & CUTE GARDEN DECOR TRANSFORMATION MASTER PROMPT 🤯🔥</div>
+                        <div class="link-status" data-url="https://docs.google.com/document/d/17QKBAbfEwTkYI8TlUQ8_yrbpZVFQplXOSZIYRnX15q8/edit?usp=drive_link"><span style="color:var(--subtext-color);">Checking link...</span></div>
+                    </div>
+                    <a href="https://docs.google.com/document/d/17QKBAbfEwTkYI8TlUQ8_yrbpZVFQplXOSZIYRnX15q8/edit?usp=drive_link" target="_blank" class="btn-launch btn-stickman"><i class="fa-solid fa-arrow-up-right-from-square"></i> Open Document</a>
+                </div>
+            </div>
+
+            <!-- UPDATED TOOL: GIT & YT INFO FETCHER -->
+            <div class="tool-card" data-id="git-yt-info-fetcher">
+                <div class="tool-banner">
+                    <div class="tool-banner-bg"></div>
+                    <i class="fa-regular fa-star star-icon" onclick="toggleFavorite(this, 'GIT & YT INFO FETCHER', 'hassanmods-modal')"></i>
+                    <img src="https://i.ibb.co/SDg606JB/IMG-20261108-WA0025.jpg" alt="Logo">
+                </div>
+                <div class="tool-content">
+                    <div>
+                        <div class="tool-title">GIT & YT INFO FETCHER</div>
+                        <span class="badge-new badge-vip">UPDATED HUB</span>
+                        <div class="tool-desc">
+                            Paste any GitHub username or Personal Access Token to fetch complete profile info and repositories.<br><br>
+                            Enter your YouTube vlog/video link to fetch videos.
+                        </div>
+                    </div>
+                    <button class="btn-launch btn-git" onclick="openModal('hassanmods-modal')"><i class="fa-solid fa-rocket"></i> Launch Fetcher</button>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Connect Section -->
+        <div class="connect-section">
+            <div class="section-title">Connect With Us</div>
+            <div class="connect-grid">
+                <!-- NEW WHATSAPP CHANNELS AT THE LAST OF CONNECT SECTION -->
+                <a href="https://whatsapp.com/channel/0029VbDuHz8JJhzb8zf92C1H" target="_blank" class="connect-card">
+                    <div class="connect-left">
+                        <div class="connect-icon icon-wa"><i class="fa-brands fa-whatsapp"></i></div>
+                        <div class="connect-info"><h4>MY DEVELOPMENTS UPDATES</h4><p>WHATSAPP CHANNEL UPDATE</p></div>
+                    </div>
+                    <i class="fa-solid fa-arrow-up-right-from-square" style="color: var(--subtext-color);"></i>
+                </a>
+                <a href="https://whatsapp.com/channel/0029VbE1NH99Bb65S8oOnS47" target="_blank" class="connect-card">
+                    <div class="connect-left">
+                        <div class="connect-icon icon-wa"><i class="fa-brands fa-whatsapp"></i></div>
+                        <div class="connect-info"><h4>ALL SOURCE CODES</h4><p>WHATSAPP SOURCE CODES CHANNEL</p></div>
+                    </div>
+                    <i class="fa-solid fa-arrow-up-right-from-square" style="color: var(--subtext-color);"></i>
+                </a>
+
+                <a href="https://t.me/Hassan_1M_FF" target="_blank" class="connect-card">
+                    <div class="connect-left">
+                        <div class="connect-icon icon-tg"><i class="fa-brands fa-telegram"></i></div>
+                        <div class="connect-info"><h4>AFZAAL OFC</h4><p>AFZAAL OFC TELEGRAM</p></div>
+                    </div>
+                    <i class="fa-solid fa-arrow-up-right-from-square" style="color: var(--subtext-color);"></i>
+                </a>
+                <a href="https://t.me/hassanff01" target="_blank" class="connect-card">
+                    <div class="connect-left">
+                        <div class="connect-icon icon-tg"><i class="fa-brands fa-telegram"></i></div>
+                        <div class="connect-info"><h4>AFZAAL OFC 2</h4><p>AFZAAL OFC 2 TELEGRAM</p></div>
+                    </div>
+                    <i class="fa-solid fa-arrow-up-right-from-square" style="color: var(--subtext-color);"></i>
+                </a>
+                <a href="https://tiktok.com/@maryo3211" target="_blank" class="connect-card">
+                    <div class="connect-left">
+                        <div class="connect-icon icon-tt"><i class="fa-brands fa-tiktok"></i></div>
+                        <div class="connect-info"><h4>AFZAAL TT OFC</h4><p>TIKTOK PROFILE</p></div>
+                    </div>
+                    <i class="fa-solid fa-arrow-up-right-from-square" style="color: var(--subtext-color);"></i>
+                </a>
+                <a href="https://YouTube.com/@hassan-ff-1x" target="_blank" class="connect-card">
+                    <div class="connect-left">
+                        <div class="connect-icon icon-yt"><i class="fa-brands fa-youtube"></i></div>
+                        <div class="connect-info"><h4>AFZAAL YT OFC</h4><p>YOUTUBE CHANNEL</p></div>
+                    </div>
+                    <i class="fa-solid fa-arrow-up-right-from-square" style="color: var(--subtext-color);"></i>
+                </a>
+                <a href="https://instagram.com/@end_hassan_ff" target="_blank" class="connect-card">
+                    <div class="connect-left">
+                        <div class="connect-icon icon-ig"><i class="fa-brands fa-instagram"></i></div>
+                        <div class="connect-info"><h4>AFZAAL IG OFC</h4><p>INSTAGRAM PROFILE</p></div>
+                    </div>
+                    <i class="fa-solid fa-arrow-up-right-from-square" style="color: var(--subtext-color);"></i>
+                </a>
+                <a href="https://GitHub.com/hassan-ff-max" target="_blank" class="connect-card">
+                    <div class="connect-left">
+                        <div class="connect-icon icon-gh"><i class="fa-brands fa-github"></i></div>
+                        <div class="connect-info"><h4>AFZAAL GUT HUB OFC</h4><p>GITHUB PROFILE 1</p></div>
+                    </div>
+                    <i class="fa-solid fa-arrow-up-right-from-square" style="color: var(--subtext-color);"></i>
+                </a>
+                <a href="https://GitHub.com/hassan-ff-max-11" target="_blank" class="connect-card">
+                    <div class="connect-left">
+                        <div class="connect-icon icon-gh"><i class="fa-brands fa-github"></i></div>
+                        <div class="connect-info"><h4>AFZAAL GITHUB 2 OFC</h4><p>GITHUB PROFILE 2</p></div>
+                    </div>
+                    <i class="fa-solid fa-arrow-up-right-from-square" style="color: var(--subtext-color);"></i>
+                </a>
+                <a href="https://wa.me/923294675242" target="_blank" class="connect-card">
+                    <div class="connect-left">
+                        <div class="connect-icon icon-wa"><i class="fa-brands fa-whatsapp"></i></div>
+                        <div class="connect-info"><h4>AFZAAL WA OFC</h4><p>WHATSAPP CONTACT</p></div>
+                    </div>
+                    <i class="fa-solid fa-arrow-up-right-from-square" style="color: var(--subtext-color);"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- RIGHT CORNER FLOATING 3-LINES MENU -->
+    <div class="corner-menu-container">
+        <div class="corner-menu-btn" onclick="toggleCornerMenu()" title="Quick Menu">
+            <i class="fa-solid fa-bars"></i>
+        </div>
+        <div id="corner-menu-dropdown" class="corner-menu-dropdown">
+            <a href="https://whatsapp.com/channel/0029VbDuHz8JJhzb8zf92C1H" target="_blank" class="corner-menu-item">
+                <i class="fa-brands fa-whatsapp" style="color:#25D366; font-size:16px;"></i>
+                <span>DEVELOPMENTS UPDATES</span>
+            </a>
+            <a href="https://whatsapp.com/channel/0029VbE1NH99Bb65S8oOnS47" target="_blank" class="corner-menu-item">
+                <i class="fa-brands fa-whatsapp" style="color:#25D366; font-size:16px;"></i>
+                <span>SOURCE CODES CHANNEL</span>
+            </a>
+            <a href="https://wa.me/923294675242" target="_blank" class="corner-menu-item">
+                <i class="fa-brands fa-whatsapp" style="color:#25D366; font-size:16px;"></i>
+                <span>DEV WA NUM</span>
+            </a>
+            <a href="https://t.me/hassanff01" target="_blank" class="corner-menu-item">
+                <i class="fa-brands fa-telegram" style="color:#229ED9; font-size:16px;"></i>
+                <span>DEV TG ACC</span>
+            </a>
+            <div class="corner-menu-item" style="cursor:default; color:#ff7b00; justify-content:center;">
+                <i class="fa-solid fa-clock"></i>
+                <span>MORE TOOLS COMING SOON</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- WhatsApp Float Button -->
+    <a href="https://wa.me/923294675242" target="_blank" class="whatsapp-float"><i class="fa-brands fa-whatsapp"></i></a>
+
+    <!-- Custom Toast Notification Element -->
+    <div id="custom-toast">
+        <i class="fa-solid fa-circle-check"></i>
+        <span id="toast-message">Success!</span>
+    </div>
+
+    <!-- ==========================================
+       MODALS FOR TOOLS & 3-DOTS MENU
+       ========================================== -->
+
+    <!-- Clean Modal Popup for 3-Dots Menu -->
+    <div id="dots-modal" class="dots-modal-overlay">
+        <div class="dots-modal-content">
+            <div class="dots-modal-header">
+                <span><i class="fa-solid fa-bars"></i> AFZAAL MENU & SETTINGS</span>
+                <span class="dots-modal-close" onclick="toggle3DotsModal()">&times;</span>
+            </div>
+            
+            <!-- EXPANDED DYNAMIC FONT SELECTOR IN MENU -->
+            <div class="font-selector-wrapper">
+                <div class="font-selector-label">
+                    <i class="fa-solid fa-font"></i> Select Toolkit Font
+                </div>
+                <select id="font-family-select" class="font-select-dropdown" onchange="changeGlobalFont(this.value)">
+                    <option value="'Poppins', sans-serif">Poppins (Modern & Clean)</option>
+                    <option value="'Montserrat', sans-serif">Montserrat (Bold & Tech)</option>
+                    <option value="'Roboto', sans-serif">Roboto (Professional Standard)</option>
+                    <option value="'Orbitron', sans-serif">Orbitron (Futuristic Gaming)</option>
+                    <option value="'Source Code Pro', monospace">Source Code Pro (Coding Style)</option>
+                    <option value="'Pacifico', cursive">Pacifico (Fancy Script)</option>
+                    <option value="Georgia, 'Times New Roman', serif">Classic Serif</option>
+                    <option value="'Segoe UI', Tahoma, Geneva, sans-serif">System Default (Segoe UI)</option>
+                </select>
+            </div>
+
+            <div class="dots-menu-item" onclick="openModal('faq-modal'); toggle3DotsModal();">
+                <i class="fa-solid fa-circle-question" style="color:#ff7b00;"></i> FAQ & Help
+            </div>
+            <div class="dots-menu-item" onclick="openModal('about-modal'); toggle3DotsModal();">
+                <i class="fa-solid fa-circle-info" style="color:#00e6a8;"></i> About Hassan Toolkit
+            </div>
+            <a href="https://t.me/Hassan_1M_FF" target="_blank" class="dots-menu-item">
+                <i class="fa-brands fa-telegram" style="color:#229ED9;"></i> AFZAAL OFC
+            </a>
+            <a href="https://whatsapp.com/channel/0029VbDRJh789ine9bjCVF3m" target="_blank" class="dots-menu-item">
+                <i class="fa-brands fa-whatsapp" style="color:#25D366;"></i> WhatsApp
+            </a>
+        </div>
+    </div>
+
+    <!-- ADVANCED TIKTOK DL MODAL WITH 3 OPTIONS & THUMBNAIL -->
+    <div id="tt-modal" class="modal">
+        <div class="terminal-window">
+            <div class="terminal-topbar">
+                <div class="terminal-dots"><div class="dot dot-red"></div><div class="dot dot-yellow"></div><div class="dot dot-green"></div></div>
+                <div class="terminal-path">~/hassan-toolkit/tiktok-downloader</div>
+                <div class="terminal-close" onclick="closeModal('tt-modal')">&times;</div>
+            </div>
+            <div class="terminal-body">
+                <div class="terminal-logo-area">
+                    <div class="terminal-brand"><i class="fa-brands fa-tiktok" style="color:#00d2ff;"></i> TIKTOK DL ADVANCED</div>
+                    <div class="terminal-subtitle">// PREVIEW, NO-WM, WM & MP3 AUDIO</div>
+                </div>
+                <div class="form-box">
+                    <input type="text" id="tt-url" class="hm-input-field" placeholder="Paste TikTok Video Link here...">
+                    <button class="btn-terminal" onclick="fetchTikTokData()"><i class="fa-solid fa-magnifying-glass"></i> FETCH TIKTOK MEDIA</button>
+                </div>
+                <div id="tt-loader" style="display:none; text-align:center; padding: 15px; color:#ff7b00; font-family:monospace; font-size:12px;"><i class="fa-solid fa-spinner fa-spin"></i> ANALYZING TIKTOK LINK...</div>
+                
+                <!-- TikTok Preview Card & Download Buttons -->
+                <div id="tt-results" class="result-box"></div>
+                
+                <div class="terminal-footer">powered by <span>hassan toolkit</span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MERGED TOOL MODAL: GIT & YT INFO FETCHER -->
+    <div id="hassanmods-modal" class="modal">
+        <div class="terminal-window">
+            <div class="terminal-topbar">
+                <div class="terminal-dots"><div class="dot dot-red"></div><div class="dot dot-yellow"></div><div class="dot dot-green"></div></div>
+                <div class="terminal-path">~/hassan-toolkit/git-yt-fetcher</div>
+                <div class="terminal-close" onclick="closeModal('hassanmods-modal')">&times;</div>
+            </div>
+            <div class="terminal-body">
+                
+                <!-- FETCHER HEADER -->
+                <div class="hassanmods-header-box">
+                    <div class="hassanmods-title"><span class="white-txt">GIT & YT</span> <span class="red-txt">FETCHER</span></div>
+                    <a href="https://wa.me/923294675242" target="_blank" class="hassanmods-dev-link"><i class="fa-brands fa-whatsapp"></i> Dev: +92 329 4675242</a>
+                </div>
+
+                <!-- TABS SWITCHER -->
+                <div class="hassanmods-tabs">
+                    <button class="hassanmods-tab-btn active" id="hm-btn-gh" onclick="switchHassanTab('gh')">
+                        <i class="fa-brands fa-github"></i> GitHub Analyzer
+                    </button>
+                    <button class="hassanmods-tab-btn" id="hm-btn-yt" onclick="switchHassanTab('yt')">
+                        <i class="fa-brands fa-youtube"></i> YT Info Fetcher
+                    </button>
+                </div>
+
+                <!-- TAB 1: GITHUB ANALYZER -->
+                <div id="hm-tab-gh" class="hm-tab-section active">
+                    <input type="text" id="hm-gh-username" class="hm-input-field" placeholder="GitHub Username (e.g. torvalds)">
+                    <input type="text" id="hm-gh-token" class="hm-input-field" placeholder="Personal Access Token (Optional)">
+                    <button class="btn-terminal" style="background: linear-gradient(90deg, #27c93f, #11998e);" onclick="fetchHassanGitHub()"><i class="fa-solid fa-magnifying-glass"></i> Analyze</button>
+
+                    <div id="hm-gh-loader" style="display:none; text-align:center; padding:15px; color:#27c93f; font-size:12px;"><i class="fa-solid fa-spinner fa-spin"></i> FETCHING GITHUB DATA...</div>
+                    <div id="hm-gh-results" style="margin-top: 15px;"></div>
+                </div>
+
+                <!-- TAB 2: YOUTUBE INFO & INLINE PLAY -->
+                <div id="hm-tab-yt" class="hm-tab-section">
+                    <input type="text" id="hm-yt-url" class="hm-input-field" placeholder="Paste YouTube Video Link...">
+                    <button class="btn-terminal" style="background: linear-gradient(90deg, #ff4757, #ff0055);" onclick="fetchHassanYT()"><i class="fa-solid fa-magnifying-glass"></i> Fetch Info</button>
+
+                    <div id="hm-yt-loader" style="display:none; text-align:center; padding:15px; color:#ff4757; font-size:12px;"><i class="fa-solid fa-spinner fa-spin"></i> FETCHING VIDEO DATA...</div>
+                    
+                    <!-- Inline Video Player Placeholder -->
+                    <div id="hm-inline-video-box" style="display:none; margin-top: 15px;"></div>
+                    
+                    <div id="hm-yt-results" style="margin-top: 15px;"></div>
+                </div>
+
+                <div class="terminal-footer">powered by <span>hassan toolkit</span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FAQ Modal -->
+    <div id="faq-modal" class="modal">
+        <div class="terminal-window">
+            <div class="terminal-topbar">
+                <div class="terminal-dots"><div class="dot dot-red"></div><div class="dot dot-yellow"></div><div class="dot dot-green"></div></div>
+                <div class="terminal-path">~/hassan-toolkit/faq-help</div>
+                <div class="terminal-close" onclick="closeModal('faq-modal')">&times;</div>
+            </div>
+            <div class="terminal-body">
+                <div class="terminal-logo-area">
+                    <div class="terminal-brand"><i class="fa-solid fa-circle-question" style="color:var(--accent-orange);"></i> FREQUENTLY ASKED QUESTIONS</div>
+                    <div class="terminal-subtitle">// HELP & SUPPORT CENTER</div>
+                </div>
+                <div class="faq-accordion">
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFaq(this)">
+                            <span>What is Hassan Toolkit?</span>
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">Hassan Toolkit is a all-in-one developer and creator toolkit providing premium utilities, video downloaders, AI master prompts, editing assets, and custom WhatsApp bots.</div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFaq(this)">
+                            <span>Are all tools free to use?</span>
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">Yes, 100% free! All resources, downloaders, and prompts are curated and maintained by Hassan FF for the community without any paywall.</div>
+                    </div>
+                </div>
+                <div class="terminal-footer">powered by <span>hassan toolkit</span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- About Modal -->
+    <div id="about-modal" class="modal">
+        <div class="terminal-window">
+            <div class="terminal-topbar">
+                <div class="terminal-dots"><div class="dot dot-red"></div><div class="dot dot-yellow"></div><div class="dot dot-green"></div></div>
+                <div class="terminal-path">~/hassan-toolkit/about-us</div>
+                <div class="terminal-close" onclick="closeModal('about-modal')">&times;</div>
+            </div>
+            <div class="terminal-body">
+                <div class="terminal-logo-area">
+                    <div class="terminal-brand"><i class="fa-solid fa-circle-info" style="color:#00e6a8;"></i> ABOUT AFZAAL TOOLKIT</div>
+                    <div class="terminal-subtitle">// OFFICIAL DEVELOPER BRIEF</div>
+                </div>
+                <div style="font-size: 11px; line-height: 1.8; color: #ccc; background: rgba(255,255,255,0.03); padding: 15px; border-radius: 10px; border: 1px solid var(--card-border); text-align: justify;">
+                    <p style="margin-bottom: 12px;">Welcome to <strong style="color:var(--accent-orange);">AFZAAL TOOLKIT</strong> — the ultimate digital suite specifically engineered for developers, video editors, content creators, and digital enthusiasts.</p>
+                </div>
+                <div class="terminal-footer">powered by <span>hassan toolkit</span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==========================================
+       JAVASCRIPT LOGIC
+       ========================================== -->
+    <script>
+        let hasUnreadSaved = false;
+
+        window.addEventListener('load', () => {
+            loadFavoritesState();
+            checkLinkStatuses();
+            setupSearchFilter();
+            updateSavedBadgeState();
+            updateTotalToolsCounter();
+            initTypewriterEraserEffect();
+            loadSavedFontPreference();
+            loadSavedThemePreference();
+        });
+
+        /* ANTI-CODE EXTRACTION & PROTECTION SCRIPT */
+        document.addEventListener('contextmenu', e => e.preventDefault());
+        document.addEventListener('keydown', e => {
+            if (e.keyCode === 123 || 
+                (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74 || e.keyCode === 67)) || 
+                (e.ctrlKey && e.keyCode === 85)) {
+                e.preventDefault();
+                showToast('Source Code Protected 🔒');
+                return false;
+            }
+        });
+
+        /* CORNER MENU TOGGLE */
+        function toggleCornerMenu() {
+            const dropdown = document.getElementById('corner-menu-dropdown');
+            if(dropdown) {
+                dropdown.classList.toggle('active');
+            }
+        }
+
+        // Close corner menu when clicking outside
+        window.addEventListener('click', function(e) {
+            const container = document.querySelector('.corner-menu-container');
+            const dropdown = document.getElementById('corner-menu-dropdown');
+            if(container && dropdown && !container.contains(e.target)) {
+                dropdown.classList.remove('active');
+            }
+        });
+
+        /* MULTI-STATE THEME SWITCHER LOGIC */
+        function toggleMultiTheme() {
+            const body = document.body;
+            const themeIcon = document.getElementById('theme-toggle');
+            
+            // Check current theme state
+            if (!body.classList.contains('theme-day') && 
+                !body.classList.contains('theme-golden') && 
+                !body.classList.contains('theme-golden-black') && 
+                !body.classList.contains('theme-white-black')) {
+                // State 1 (Night/Black) -> State 2 (Day/Light Mode with Sun)
+                body.classList.add('theme-day');
+                if(themeIcon) {
+                    themeIcon.className = 'fa-solid fa-sun';
+                }
+                localStorage.setItem('hassan_theme_state', 'day');
+                showToast('Day Mode Activated ☀️');
+            } else if (body.classList.contains('theme-day')) {
+                // State 2 (Day) -> State 3 (Golden Theme)
+                body.classList.remove('theme-day');
+                body.classList.add('theme-golden');
+                if(themeIcon) {
+                    themeIcon.className = 'fa-solid fa-sun';
+                }
+                localStorage.setItem('hassan_theme_state', 'golden');
+                showToast('Golden Theme Activated ✨');
+            } else if (body.classList.contains('theme-golden')) {
+                // State 3 (Golden) -> State 4 (Golden + Black)
+                body.classList.remove('theme-golden');
+                body.classList.add('theme-golden-black');
+                if(themeIcon) {
+                    themeIcon.className = 'fa-solid fa-sun';
+                }
+                localStorage.setItem('hassan_theme_state', 'golden-black');
+                showToast('Golden + Black Theme Activated 🌟');
+            } else if (body.classList.contains('theme-golden-black')) {
+                // State 4 (Golden + Black) -> State 5 (White + Black)
+                body.classList.remove('theme-golden-black');
+                body.classList.add('theme-white-black');
+                if(themeIcon) {
+                    themeIcon.className = 'fa-solid fa-sun';
+                }
+                localStorage.setItem('hassan_theme_state', 'white-black');
+                showToast('White + Black Theme Activated 🖤🤍');
+            } else {
+                // State 5 (White + Black) -> Reset back to Normal Night Mode with Moon
+                body.classList.remove('theme-white-black');
+                if(themeIcon) {
+                    themeIcon.className = 'fa-solid fa-moon';
+                }
+                localStorage.setItem('hassan_theme_state', 'night');
+                showToast('Normal Night Mode Activated 🌙');
+            }
+        }
+
+        function loadSavedThemePreference() {
+            const savedState = localStorage.getItem('hassan_theme_state');
+            const body = document.body;
+            const themeIcon = document.getElementById('theme-toggle');
+            if(!savedState) return;
+
+            body.classList.remove('theme-day', 'theme-golden', 'theme-golden-black', 'theme-white-black');
+            if(savedState === 'day') {
+                body.classList.add('theme-day');
+                if(themeIcon) themeIcon.className = 'fa-solid fa-sun';
+            } else if(savedState === 'golden') {
+                body.classList.add('theme-golden');
+                if(themeIcon) themeIcon.className = 'fa-solid fa-sun';
+            } else if(savedState === 'golden-black') {
+                body.classList.add('theme-golden-black');
+                if(themeIcon) themeIcon.className = 'fa-solid fa-sun';
+            } else if(savedState === 'white-black') {
+                body.classList.add('theme-white-black');
+                if(themeIcon) themeIcon.className = 'fa-solid fa-sun';
+            } else {
+                if(themeIcon) themeIcon.className = 'fa-solid fa-moon';
+            }
+        }
+
+        /* GLOBAL FONT SELECTION HANDLER */
+        function changeGlobalFont(fontFamily) {
+            document.documentElement.style.setProperty('--active-font-family', fontFamily);
+            localStorage.setItem('hassan_selected_font', fontFamily);
+            showToast('Toolkit Font Updated 🔤');
+        }
+
+        function loadSavedFontPreference() {
+            const savedFont = localStorage.getItem('hassan_selected_font');
+            if(savedFont) {
+                document.documentElement.style.setProperty('--active-font-family', savedFont);
+                const selectElem = document.getElementById('font-family-select');
+                if(selectElem) selectElem.value = savedFont;
+            }
+        }
+
+        function initTypewriterEraserEffect() {
+            const el = document.getElementById('typewriter-title');
+            if(!el) return;
+            const phrases = [
+                "AFZAAL FF",
+                "TOOLKIT",
+                "FOR TOOLS",
+                "VISIT MY SITE",
+                "CONTACT FOR MORE WEBSITES FOR YOU",
+                "WITHOUT ANY COST",
+                "FREE!!!!"
+            ];
+            let phraseIndex = 0;
+            let charIndex = 0;
+            let isDeleting = false;
+            let typeSpeed = 100;
+
+            function typeLoop() {
+                const currentPhrase = phrases[phraseIndex];
+                if(isDeleting) {
+                    el.innerText = currentPhrase.substring(0, charIndex - 1);
+                    charIndex--;
+                    typeSpeed = 50;
+                } else {
+                    el.innerText = currentPhrase.substring(0, charIndex + 1);
+                    charIndex++;
+                    typeSpeed = 100;
+                }
+
+                if(!isDeleting && charIndex === currentPhrase.length) {
+                    isDeleting = true;
+                    typeSpeed = 1500;
+                } else if(isDeleting && charIndex === 0) {
+                    isDeleting = false;
+                    phraseIndex = (phraseIndex + 1) % phrases.length;
+                    typeSpeed = 500;
+                }
+                setTimeout(typeLoop, typeSpeed);
+            }
+            typeLoop();
+        }
+
+        function toggleFuturisticUpdates() {
+            const body = document.getElementById('futuristic-toggle-content');
+            const icon = document.getElementById('futuristic-toggle-icon');
+            if(!body) return;
+            if(body.style.display === 'none') {
+                body.style.display = 'block';
+                if(icon) icon.className = 'fa-solid fa-chevron-down';
+            } else {
+                body.style.display = 'none';
+                if(icon) icon.className = 'fa-solid fa-chevron-up';
+            }
+        }
+
+        /* DYNAMIC REAL-TIME TOOLS COUNTER FIX */
+        function updateTotalToolsCounter() {
+            const allCards = document.querySelectorAll('.tools-grid .tool-card');
+            const totalToolsElem = document.getElementById('total-tools-count');
+            if(totalToolsElem) {
+                totalToolsElem.innerText = allCards.length;
+            }
+        }
+
+        function closeIntroScreen() {
+            const intro = document.getElementById('intro-screen');
+            if(intro) { intro.style.display = 'none'; }
+        }
+
+        function toggle3DotsModal() {
+            const modal = document.getElementById('dots-modal');
+            if(!modal) return;
+            modal.style.display = (modal.style.display === 'flex') ? 'none' : 'flex';
+        }
+
+        function toggleFaq(questionElem) {
+            const answer = questionElem.nextElementSibling;
+            const icon = questionElem.querySelector('i');
+            if(answer.style.display === 'block') {
+                answer.style.display = 'none';
+                icon.className = 'fa-solid fa-chevron-down';
+            } else {
+                answer.style.display = 'block';
+                icon.className = 'fa-solid fa-chevron-up';
+            }
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('custom-toast');
+            if(!toast) return;
+            toast.querySelector('#toast-message').innerText = message;
+            toast.classList.add('show');
+            setTimeout(() => { toast.classList.remove('show'); }, 3000);
+        }
+
+        function setupSearchFilter() {
+            const searchInput = document.getElementById('tool-search-input');
+            if(!searchInput) return;
+            searchInput.addEventListener('input', function() {
+                const query = this.value.toLowerCase().trim();
+                document.querySelectorAll('.tool-card').forEach(card => {
+                    const titleText = card.querySelector('.tool-title')?.textContent.toLowerCase() || '';
+                    const descText = card.querySelector('.tool-desc')?.textContent.toLowerCase() || '';
+                    card.style.display = (titleText.includes(query) || descText.includes(query)) ? 'flex' : 'none';
+                });
+            });
+        }
+
+        async function checkLinkStatuses() {
+            document.querySelectorAll('.link-status').forEach(async (el) => {
+                const url = el.getAttribute('data-url');
+                try {
+                    await fetch(url, { method: 'HEAD', mode: 'no-cors' });
+                    el.innerHTML = `<span style="color:#27c93f;">● Online</span>`;
+                } catch (err) {
+                    el.innerHTML = `<span style="color:#ffbd2e;">⚠️ Ready</span>`;
+                }
+            });
+        }
+
+        function updateSavedBadgeState() {
+            const badge = document.getElementById('saved-badge');
+            if(!badge) return;
+            let favorites = JSON.parse(localStorage.getItem('hassan_favorites')) || [];
+            if(favorites.length > 0 && hasUnreadSaved) { badge.classList.add('unread'); } 
+            else { badge.classList.remove('unread'); }
+        }
+
+        function toggleFavorites() {
+            const dropdown = document.getElementById('fav-dropdown');
+            if(dropdown) dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+            hasUnreadSaved = false;
+            updateSavedBadgeState();
+            renderFavoritesList();
+        }
+
+        function toggleFavorite(starElem, title, target, isExternal = false) {
+            let favorites = JSON.parse(localStorage.getItem('hassan_favorites')) || [];
+            const index = favorites.findIndex(item => item.title === title);
+            if(index > -1) {
+                favorites.splice(index, 1);
+                starElem.classList.remove('fa-solid', 'favorited');
+                starElem.classList.add('fa-regular');
+                showToast(`Removed from Saved`);
+            } else {
+                favorites.push({ title, target, isExternal });
+                starElem.classList.remove('fa-regular');
+                starElem.classList.add('fa-solid', 'favorited');
+                hasUnreadSaved = true;
+                showToast(`Saved to Favorites!`);
+            }
+            localStorage.setItem('hassan_favorites', JSON.stringify(favorites));
+            updateSavedBadgeState();
+        }
+
+        function loadFavoritesState() {
+            let favorites = JSON.parse(localStorage.getItem('hassan_favorites')) || [];
+            document.querySelectorAll('.star-icon').forEach(star => {
+                const onclickAttr = star.getAttribute('onclick');
+                favorites.forEach(fav => {
+                    if(onclickAttr && onclickAttr.includes(fav.title)) {
+                        star.classList.remove('fa-regular');
+                        star.classList.add('fa-solid', 'favorited');
+                    }
+                });
+            });
+        }
+
+        function renderFavoritesList() {
+            let favorites = JSON.parse(localStorage.getItem('hassan_favorites')) || [];
+            const listContainer = document.getElementById('fav-list');
+            if(!listContainer) return;
+            if(favorites.length === 0) {
+                listContainer.innerHTML = `<p style="font-size:12px; color:var(--subtext-color); text-align:center; padding:10px;">No favorite tools saved yet.</p>`;
+                return;
+            }
+            let html = '';
+            favorites.forEach(fav => {
+                let action = fav.isExternal ? `window.open('${fav.target}', '_blank')` : `openModal('${fav.target}'); toggleFavorites();`;
+                html += `<div class="notif-item" style="cursor:pointer; display:flex; justify-content:space-between; align-items:center;" onclick="${action}"><span><i class="fa-solid fa-star" style="color:#ffd700; margin-right:5px;"></i> ${fav.title}</span><i class="fa-solid fa-chevron-right" style="font-size:10px; color:var(--subtext-color);"></i></div>`;
+            });
+            listContainer.innerHTML = html;
+        }
+
+        function openModal(modalId) { const m = document.getElementById(modalId); if(m) m.style.display = 'block'; }
+        function closeModal(modalId) { const m = document.getElementById(modalId); if(m) m.style.display = 'none'; }
+
+        /* ADVANCED TIKTOK FETCH WITH THUMBNAIL, NO-WM, WM & MP3 AUDIO */
+        async function fetchTikTokData() {
+            const url = document.getElementById('tt-url').value.trim();
+            const loader = document.getElementById('tt-loader');
+            const resBox = document.getElementById('tt-results');
+            if(!url) { alert('Please enter a valid TikTok Video URL!'); return; }
+            
+            loader.style.display = 'block'; 
+            resBox.style.display = 'none';
+            resBox.innerHTML = '';
+
+            try {
+                const response = await fetch(`https://tikwm.com/api/?url=${encodeURIComponent(url)}`);
+                const res = await response.json();
+                loader.style.display = 'none';
+                
+                if(res.code !== 0 || !res.data) { 
+                    alert('Failed to fetch TikTok video. Check the link!'); 
+                    return; 
+                }
+
+                const data = res.data;
+                const coverImg = data.cover || data.origin_cover;
+                const videoTitle = data.title || 'TikTok Video';
+                const noWatermarkUrl = data.play;
+                const watermarkUrl = data.wmplay || data.play;
+                const musicUrl = data.music || data.music_info?.play;
+
+                resBox.style.display = 'block';
+                resBox.innerHTML = `
+                    <div class="tt-preview-card">
+                        <img src="${coverImg}" class="tt-thumb-img" alt="TikTok Cover">
+                        <div class="tt-video-title"><strong>${videoTitle}</strong></div>
+                        <div class="tt-download-actions">
+                            <a href="${noWatermarkUrl}" target="_blank" download class="btn-dl-opt btn-dl-nwm">
+                                <i class="fa-solid fa-circle-down"></i> Download Without Watermark
+                            </a>
+                            <a href="${watermarkUrl}" target="_blank" download class="btn-dl-opt btn-dl-wm">
+                                <i class="fa-solid fa-video"></i> Download With Watermark
+                            </a>
+                            ${musicUrl ? `
+                            <a href="${musicUrl}" target="_blank" download class="btn-dl-opt btn-dl-mp3">
+                                <i class="fa-solid fa-music"></i> Download Audio MP3
+                            </a>
+                            ` : ''}
+                        </div>
+                    </div>
+                `;
+            } catch(e) { 
+                loader.style.display = 'none'; 
+                alert('Network or server error while fetching TikTok video.'); 
+            }
+        }
+
+        /* AFZAALMODS / FETCHER TAB SWITCHING */
+        function switchHassanTab(tab) {
+            document.querySelectorAll('.hassanmods-tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.hm-tab-section').forEach(s => s.classList.remove('active'));
+
+            if(tab === 'gh') {
+                document.getElementById('hm-btn-gh').classList.add('active');
+                document.getElementById('hm-tab-gh').classList.add('active');
+            } else {
+                document.getElementById('hm-btn-yt').classList.add('active');
+                document.getElementById('hm-tab-yt').classList.add('active');
+            }
+        }
+
+        /* GITHUB FETCH FUNCTION */
+        async function fetchHassanGitHub() {
+            const username = document.getElementById('hm-gh-username').value.trim();
+            const loader = document.getElementById('hm-gh-loader');
+            const resBox = document.getElementById('hm-gh-results');
+
+            if(!username) { alert('GitHub Username enter karein!'); return; }
+
+            loader.style.display = 'block';
+            resBox.innerHTML = '';
+
+            try {
+                const userRes = await fetch(`https://api.github.com/users/${username}`);
+                const userData = await userRes.json();
+
+                if(userData.message === "Not Found") {
+                    loader.style.display = 'none';
+                    resBox.innerHTML = `<p style="color:#ff4757; text-align:center; font-size:12px;">User Nahi Mila!</p>`;
+                    return;
+                }
+
+                const repoRes = await fetch(`https://api.github.com/users/${username}/repos?sort=updated&per_page=10`);
+                const reposData = await repoRes.json();
+
+                loader.style.display = 'none';
+
+                let repoListHtml = '';
+                if(Array.isArray(reposData)) {
+                    reposData.forEach(repo => {
+                        repoListHtml += `
+                            <a href="${repo.html_url}" target="_blank" class="gh-repo-item-link">
+                                <span><i class="fa-regular fa-bookmark"></i> ${repo.name}</span>
+                                <span style="font-size:10px; color:#888;"><i class="fa-regular fa-star"></i> ${repo.stargazers_count} | <i class="fa-solid fa-code-fork"></i> ${repo.forks_count}</span>
+                            </a>
+                        `;
+                    });
+                }
+
+                resBox.innerHTML = `
+                    <div class="gh-profile-card">
+                        <img src="${userData.avatar_url}" class="gh-avatar-img">
+                        <h3 style="font-size:16px; color:#fff; font-weight:bold;">${userData.name || userData.login}</h3>
+                        <p style="font-size:11px; color:#888;">@${userData.login}</p>
+                        <p style="font-size:11px; color:#ccc; margin-top:6px;">${userData.bio || 'No bio available.'}</p>
+                        <p style="font-size:10px; color:#666; margin-top:4px;"><i class="fa-solid fa-location-dot"></i> ${userData.location || 'N/A'} | <i class="fa-solid fa-calendar"></i> Joined: ${new Date(userData.created_at).toLocaleDateString()}</p>
+                        
+                        <div class="gh-grid-stats">
+                            <div class="gh-stat-box">
+                                <h4>${userData.followers}</h4>
+                                <p>FOLLOWERS</p>
+                            </div>
+                            <div class="gh-stat-box">
+                                <h4>${userData.public_repos}</h4>
+                                <p>REPOS</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h4 style="font-size:12px; color:#aaa; margin:12px 0 8px 0;"><i class="fa-solid fa-book-bookmark"></i> Top Repositories</h4>
+                    ${repoListHtml}
+                `;
+            } catch(e) {
+                loader.style.display = 'none';
+                alert('GitHub data fetch karne me error aya!');
+            }
+        }
+
+        /* YOUTUBE FETCH & INLINE PLAYER */
+        async function fetchHassanYT() {
+            const url = document.getElementById('hm-yt-url').value.trim();
+            const loader = document.getElementById('hm-yt-loader');
+            const resBox = document.getElementById('hm-yt-results');
+            const inlineBox = document.getElementById('hm-inline-video-box');
+
+            if(!url) { alert('YouTube Video Link enter karein!'); return; }
+
+            let videoId = '';
+            if(url.includes('v=')) { videoId = url.split('v=')[1].split('&')[0]; }
+            else if(url.includes('youtu.be/')) { videoId = url.split('youtu.be/')[1].split('?')[0]; }
+
+            if(!videoId) { alert('Invalid YouTube Link!'); return; }
+
+            loader.style.display = 'block';
+            resBox.innerHTML = '';
+            inlineBox.style.display = 'none';
+            inlineBox.innerHTML = '';
+
+            try {
+                const res = await fetch(`https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=${videoId}&format=json`);
+                const data = await res.json();
+                loader.style.display = 'none';
+
+                resBox.innerHTML = `
+                    <div class="yt-video-card">
+                        <div class="yt-thumb-box">
+                            <img src="https://img.youtube.com/vi/${videoId}/hqdefault.jpg">
+                        </div>
+                        <h4 style="font-size:13px; color:#fff; font-weight:bold; margin-bottom:4px;">${data.title}</h4>
+                        <p style="font-size:11px; color:#888; margin-bottom:12px;">Author: ${data.author_name}</p>
+
+                        <button class="btn-terminal" style="background: linear-gradient(90deg, #27c93f, #11998e);" onclick="playHassanInlineVideo('${videoId}')">
+                            <i class="fa-solid fa-play"></i> Inline Play
+                        </button>
+                    </div>
+                `;
+            } catch(e) {
+                loader.style.display = 'none';
+                alert('YouTube data fetch karne me error aya!');
+            }
+        }
+
+        /* Trigger Embedded Inline Video Screen */
+        function playHassanInlineVideo(vId) {
+            const inlineBox = document.getElementById('hm-inline-video-box');
+            inlineBox.style.display = 'block';
+            inlineBox.innerHTML = `
+                <div class="inline-player-wrapper">
+                    <iframe src="https://www.youtube.com/embed/${vId}?autoplay=1" allowfullscreen allow="autoplay"></iframe>
+                </div>
+            `;
+            inlineBox.scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
